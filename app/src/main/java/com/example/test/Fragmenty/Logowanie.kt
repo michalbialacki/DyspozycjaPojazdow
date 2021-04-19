@@ -29,6 +29,8 @@ class Logowanie : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+
+    //
     private var database = FirebaseDatabase.getInstance()
     private var myRef = database.getReference("Kierowcy")
     private lateinit var viewModel : ViewModelSystemuDyspozycji
