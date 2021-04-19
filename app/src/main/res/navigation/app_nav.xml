@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_nav"
+    app:startDestination="@id/logowanie">
+    <fragment
+        android:id="@+id/Nawigacyjny"
+        android:name="com.example.test.start"
+        android:label="fragment_start"
+        tools:layout="@layout/fragment_Nawigacyjny" >
+        <action
+            android:id="@+id/action_Nawigacyjny_to_rozliczenie2"
+            app:destination="@id/rozliczenie2" />
+        <action
+            android:id="@+id/action_Nawigacyjny_to_logowanie"
+            app:destination="@id/logowanie" />
+    </fragment>
+    <fragment
+        android:id="@+id/startowy"
+        android:name="com.example.test.Startowy"
+        android:label="fragment_startowy"
+        tools:layout="@layout/fragment_startowy" >
+        <action
+            android:id="@+id/action_startowy_to_rozliczenie2"
+            app:destination="@id/rozliczenie2" />
+    </fragment>
+    <fragment
+        android:id="@+id/rozliczenie2"
+        android:name="com.example.test.Fragmenty.Rozliczenie"
+        android:label="Rozliczenie" >
+        <action
+            android:id="@+id/action_rozliczenie2_to_Nawigacyjny"
+            app:destination="@id/Nawigacyjny" />
+        <action
+            android:id="@+id/action_rozliczenie2_to_startowy"
+            app:destination="@id/startowy" />
+        <action
+            android:id="@+id/action_rozliczenie2_to_wyborPojazdu"
+            app:destination="@id/wyborPojazdu" />
+    </fragment>
+    <fragment
+        android:id="@+id/logowanie"
+        android:name="com.example.test.Fragmenty.Logowanie"
+        android:label="Logowanie" >
+        <action
+            android:id="@+id/action_logowanie_to_wyborPojazdu"
+            app:destination="@id/wyborPojazdu" />
+        <action
+            android:id="@+id/action_logowanie_to_wprowadzenieSprawdzenieDanychKierowcy"
+            app:destination="@id/wprowadzenieSprawdzenieDanychKierowcy" />
+    </fragment>
+    <fragment
+        android:id="@+id/wyborPojazdu"
+        android:name="com.example.test.Fragmenty.WyborPojazdu"
+        android:label="fragment_wybor_pojazdu"
+        tools:layout="@layout/fragment_wybor_pojazdu" >
+        <action
+            android:id="@+id/action_wyborPojazdu_to_startowy"
+            app:destination="@id/startowy" />
+    </fragment>
+    <fragment
+        android:id="@+id/wprowadzenieSprawdzenieDanychKierowcy"
+        android:name="com.example.test.Fragmenty.DPKT.WprowadzenieSprawdzenieDanychKierowcy"
+        android:label="fragment_wprowadzenie_sprawdzenie_danych_kierowcy"
+        tools:layout="@layout/fragment_wprowadzenie_sprawdzenie_danych_kierowcy" >
+        <action
+            android:id="@+id/action_wprowadzenieSprawdzenieDanychKierowcy_to_sprawdzenieStanuLicznika"
+            app:destination="@id/sprawdzenieStanuLicznika" />
+    </fragment>
+    <fragment
+        android:id="@+id/sprawdzenieStanuLicznika"
+        android:name="com.example.test.Fragmenty.DPKT.SprawdzenieStanuLicznika"
+        android:label="fragment_sprawdzenie_stanu_licznika"
+        tools:layout="@layout/fragment_sprawdzenie_stanu_licznika" >
+        <action
+            android:id="@+id/action_sprawdzenieStanuLicznika_to_wprowadzenieSprawdzenieDanychKierowcy"
+            app:destination="@id/wprowadzenieSprawdzenieDanychKierowcy" />
+    </fragment>
+</navigation>

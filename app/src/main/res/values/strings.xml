@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">TEST</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="opcjePrzewozu">
+        <item>Garnizonowy</item>
+        <item>Okręgowy</item>
+        <item>Centralny</item>
+    </string-array>
+    <string-array name="celeWyjazdu">
+        <item>Reprezentacyjne</item>
+        <item>Transport zastępczy</item>
+        <item>Udział w uroczystości</item>
+        <item>Udział w ćwiczeniach</item>
+        <item>Udział w odprawie</item>
+        <item>Realizacja zadań kontrolnych</item>
+    </string-array>
+    <string-array name="OpcjeStatusu">
+        <item>Dostępny</item>
+        <item>Wolne</item>
+    </string-array>
+</resources>
