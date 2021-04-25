@@ -1,7 +1,6 @@
 package com.example.test
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -12,13 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.test.Adapter.DaneRecycler
-import com.example.test.DataClasses.LocationLiveData
-import com.example.test.DataClasses.LocationModel
 import com.example.test.DataClasses.PozycjaTablicy
 import com.example.test.LiveDataProjektu.LocationViewModel
 import com.example.test.LiveDataProjektu.ViewModelSystemuDyspozycji
@@ -28,7 +23,6 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.cardview.*
 import kotlinx.android.synthetic.main.fragment_nawigacyjny.*
-import java.text.SimpleDateFormat
 import java.util.*
 
 class start : Fragment() {
@@ -57,41 +51,53 @@ class start : Fragment() {
         var trasaDatabase = "Punkt trasy"
         val database = FirebaseDatabase.getInstance()
         val pojazdyRef = database.getReference("Pojazdy")
-        num_StanLicznika.hint = "${viewModel.PoczatkowyStanLicznika.value.toString()}"
+        num_OdometerInput.hint = "${viewModel.PoczatkowyStanLicznika.value.toString()}"
         TablicaRozliczenia = mutableListOf()
 
-        deklaracjeLokalizacji()
-        zaktualizujLokalizacje()
+        localizationDeclaration()
+        updateCurrentLoc()
         //getUserLocation()
         fusedLocationProviderClient.removeLocationUpdates(locationCallback)
 
 
         locViewModel.getLocationData().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            val kasztan = it.toString().removePrefix("LocationModel(").removeSuffix(")").split(",").toTypedArray()
-            tv_Longtitude.text = "Longitude= " + kasztan.first().removePrefix("longitude=")
-            tv_Latitude.text = "Latitude= " + kasztan.last().removePrefix(" latitude=")
+            val localizationMessage = it.toString()
+                .removePrefix("LocationModel(")
+                .removeSuffix(")")
+                .split(",")
+                .toTypedArray()
+            tv_Longtitude.text = "Longitude= " + localizationMessage.first()
+                .removePrefix("longitude=")
+            tv_Latitude.text = "Latitude= " + localizationMessage.last()
+                .removePrefix(" latitude=")
         })
 
 
 
         lt_Swipe.setOnRefreshListener {
             lt_Swipe.isRefreshing=false
-            val stanLicznika = num_StanLicznika.text?.toString()
+            val odometerCount = num_OdometerInput.text?.toString()
 
             getUserLocation()
-            if (stanLicznika.isNullOrEmpty()){
-                Toast.makeText(activity,"Wprowadź stan licznika!", Toast.LENGTH_SHORT).show()
+            if (odometerCount.isNullOrEmpty()){
+                Toast.makeText(activity,
+                    "Wprowadź stan licznika!",
+                    Toast.LENGTH_SHORT).show()
                 fusedLocationProviderClient.removeLocationUpdates(locationCallback)
                 return@setOnRefreshListener
             }
-            val iloscKm = stanLicznika.toDouble() -  viewModel.PoczatkowyStanLicznika.value!!
-            val punktTrasy = locViewModel.getLocationData().value.toString().removePrefix("LocationModel(").removeSuffix(")").split(",").toTypedArray()
-            val podejscie = punktTrasy.last().removePrefix(" latitude=") +","+ punktTrasy.first().removePrefix("longitude=")
-            val wiersz = DaneRecycler(podejscie,stanLicznika,iloscKm.toString())
-            viewModel.PoczatkowyStanLicznika.postValue(stanLicznika.toDouble())
-            viewModel.dodajDoRozliczenia(wiersz)
-            pojazdyRef.child(viewModel.RejestracjaPojazdu.value.toString()).child("LokPojazdu").setValue(podejscie)
-            Toast.makeText(requireContext(),"Sprawdź poprawność wprowadzonego punktu!",Toast.LENGTH_SHORT).show()
+            val kmInput = odometerCount.toDouble() -  viewModel.PoczatkowyStanLicznika.value!!
+            val routeCheckpoint = locViewModel.getLocationData().value.toString().removePrefix("LocationModel(").removeSuffix(")").split(",").toTypedArray()
+            val routeCheckpointMessage = routeCheckpoint.last().removePrefix(" latitude=") +","+ routeCheckpoint.first().removePrefix("longitude=")
+            val rowToAdapterView = DaneRecycler(routeCheckpointMessage,odometerCount,kmInput.toString())
+            viewModel.PoczatkowyStanLicznika.postValue(odometerCount.toDouble())
+            viewModel.dodajDoRozliczenia(rowToAdapterView)
+            pojazdyRef.child(viewModel.RejestracjaPojazdu.value.toString())
+                .child("LokPojazdu")
+                .setValue(routeCheckpointMessage)
+            Toast.makeText(requireContext(),
+                "Sprawdź poprawność wprowadzonego punktu!",
+                Toast.LENGTH_SHORT).show()
 
         }
 
@@ -107,11 +113,7 @@ btn_Nawigacja.setOnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_nawigacyjny,container,false)
-
-
-
-        return view
+        return inflater.inflate(R.layout.fragment_nawigacyjny,container,false)
     }
 
 
@@ -120,7 +122,7 @@ btn_Nawigacja.setOnClickListener {
 //%%%%%%%%%%%%%Miejsce na funkcje %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-    private fun deklaracjeLokalizacji(){
+    private fun localizationDeclaration(){
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(context!!)
         locationrequest = LocationRequest.create().apply {
@@ -139,7 +141,7 @@ btn_Nawigacja.setOnClickListener {
     }
 
 
-    private fun sprawdzPozwolenia() {
+    private fun checkPermits() {
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION
@@ -162,16 +164,13 @@ btn_Nawigacja.setOnClickListener {
 
     @SuppressLint("MissingPermission")
     private fun getUserLocation() {
-        sprawdzPozwolenia()
+        checkPermits()
         fusedLocationProviderClient.lastLocation.addOnSuccessListener { location: Location? ->
-            wprowadzDaneDoLiveData(location?.longitude,location?.latitude)
+            updateLiveData(location?.longitude,location?.latitude)
         }
 
-
-
-
     }
-    private fun wprowadzDaneDoLiveData (latitude : Double?, longtitude : Double?) {
+    private fun updateLiveData (latitude : Double?, longtitude : Double?) {
 
         val punktTrasy= latitude.toString() + ";" + longtitude.toString()
                 tv_Latitude.text = "Zapisano punkt"
@@ -186,8 +185,8 @@ btn_Nawigacja.setOnClickListener {
 
 
     @SuppressLint("MissingPermission")
-    private fun zaktualizujLokalizacje() {
-        sprawdzPozwolenia()
+    private fun updateCurrentLoc() {
+        checkPermits()
 
         fusedLocationProviderClient.requestLocationUpdates(
             locationrequest,
