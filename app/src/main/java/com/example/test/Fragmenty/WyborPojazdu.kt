@@ -14,8 +14,9 @@ import androidx.navigation.Navigation
 import com.example.test.LiveDataProjektu.ViewModelSystemuDyspozycji
 import com.example.test.R
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_startowy.*
 import kotlinx.android.synthetic.main.fragment_wybor_pojazdu.*
+import timber.log.Timber
+import timber.log.Timber.Tree
 
 
 class WyborPojazdu : Fragment() {
@@ -24,9 +25,8 @@ class WyborPojazdu : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
+        Timber.plant()
 
-        }
     }
 
     override fun onCreateView(
@@ -41,28 +41,27 @@ class WyborPojazdu : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val database = FirebaseDatabase.getInstance()
-        var pojazdyRef = database.getReference("Pojazdy")
-        val tablica = mutableListOf<String>()
+        var vehiclesReference = database.getReference("Pojazdy")
         viewModel = ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
-        val kotan = viewModel.przypisanePojazdydoKierowcy.value.toString().split(", ").toMutableList()
+        val kotan = viewModel.przypisanePojazdydoKierowcy.value.toString()
+                .split(", ")
+                .toMutableList()
         kotan.removeAt(0)
-        val mojSpinner = view.findViewById<Spinner>(R.id.spn_WyborPojazdu)
-        val NowyAdapter = ArrayAdapter<String>(requireContext(),R.layout.support_simple_spinner_dropdown_item, kotan)
-        mojSpinner.adapter = NowyAdapter
-        wyborPojazdu(pojazdyRef)
-        WyborStatusu()
+        val vehicleSpinner = view.findViewById<Spinner>(R.id.spn_WyborPojazdu)
+        val vehicleAdapter = ArrayAdapter<String>(requireContext(),
+                R.layout.support_simple_spinner_dropdown_item,
+                kotan)
+        vehicleSpinner.adapter = vehicleAdapter
+        vehicleChoice(vehiclesReference)
+        changeStatus()
 
         btn_RozpocznijWyjazd.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_wyborPojazdu_to_startowy)
         }
-
-
-
-
     }
 
 
-    private fun wyborPojazdu(pojazdyRef: DatabaseReference) {
+    private fun vehicleChoice(pojazdyRef: DatabaseReference) {
         spn_WyborPojazdu.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -70,28 +69,35 @@ class WyborPojazdu : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                var numerRejestracyjnyPojazdu = parent?.getItemAtPosition(position).toString()
-                viewModel.RejestracjaPojazdu.postValue(numerRejestracyjnyPojazdu)
+                var vehicleID = parent?.getItemAtPosition(position).toString()
+                viewModel.RejestracjaPojazdu.
+                postValue(vehicleID)
 
-                nadpisanieLicznikaPojazdu(pojazdyRef,numerRejestracyjnyPojazdu)
+                overriteVehicleOdometer(pojazdyRef,vehicleID)
 
                 Toast.makeText(
                     requireContext(),
-                    "Zapisano pojazd: $numerRejestracyjnyPojazdu",
+                    "Zapisano pojazd: $vehicleID",
                     Toast.LENGTH_SHORT
                 ).show()
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                Toast.makeText(requireContext(), "Wybierz cel wyjazdu!", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(),
+                        "Wybierz cel wyjazdu!",
+                        Toast.LENGTH_LONG)
+                        .show()
             }
         }
     }
 
-    private fun nadpisanieLicznikaPojazdu(pojazdyRef: DatabaseReference, numerRejestracyjnyPojazdu : String) {
-        pojazdyRef.child(numerRejestracyjnyPojazdu).child("Stan licznika").addListenerForSingleValueEvent(object : ValueEventListener{
+    private fun overriteVehicleOdometer(vehicleReference: DatabaseReference, vehicleID : String) {
+        vehicleReference.child(vehicleID)
+                .child("Stan licznika").
+                addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                val stanLicznikaWybranegoPojazdu = snapshot.getValue().toString().toDouble()
-                viewModel.PoczatkowyStanLicznika.postValue(stanLicznikaWybranegoPojazdu)
+                val odometerValue = snapshot.getValue().toString().toDouble()
+                viewModel.PoczatkowyStanLicznika
+                        .postValue(odometerValue)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -101,7 +107,7 @@ class WyborPojazdu : Fragment() {
 
     }
 
-    private fun WyborStatusu(){
+    private fun changeStatus(){
         spn_StatusUzytkownika.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -109,20 +115,23 @@ class WyborPojazdu : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                var statusUzytkownika = parent?.getItemAtPosition(position).toString()
-                if (statusUzytkownika.equals("Wolne")){
-                    Toast.makeText(requireContext(), "Dziękujemy za Twoją pracę",Toast.LENGTH_LONG).show()
-                    viewModel.statusKierowcy.postValue(statusUzytkownika)
+                var driversStatus = parent?.getItemAtPosition(position).toString()
+                if (driversStatus.equals("Wolne")){
+                    Toast.makeText(requireContext(),
+                            "Dziękujemy za Twoją pracę",
+                            Toast.LENGTH_LONG).show()
+                    viewModel.statusKierowcy
+                            .postValue(driversStatus)
                     btn_RozpocznijWyjazd.visibility = View.INVISIBLE
                 }
                 else {
-                    viewModel.statusKierowcy.postValue(statusUzytkownika)
+                    viewModel.statusKierowcy.postValue(driversStatus)
                     btn_RozpocznijWyjazd.visibility = View.VISIBLE
                 }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
+                Timber.d("Vehicle not selected")
             }
 
         }
