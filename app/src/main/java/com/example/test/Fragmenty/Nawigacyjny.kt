@@ -50,7 +50,7 @@ class start : Fragment() {
         locViewModel = ViewModelProvider(requireActivity()).get(LocationViewModel::class.java)
         var trasaDatabase = "Punkt trasy"
         val database = FirebaseDatabase.getInstance()
-        val pojazdyRef = database.getReference("Pojazdy")
+        val vehicleReference = database.getReference("Pojazdy")
         num_OdometerInput.hint = "${viewModel.PoczatkowyStanLicznika.value.toString()}"
         TablicaRozliczenia = mutableListOf()
 
@@ -72,8 +72,6 @@ class start : Fragment() {
                 .removePrefix(" latitude=")
         })
 
-
-
         lt_Swipe.setOnRefreshListener {
             lt_Swipe.isRefreshing=false
             val odometerCount = num_OdometerInput.text?.toString()
@@ -86,13 +84,16 @@ class start : Fragment() {
                 fusedLocationProviderClient.removeLocationUpdates(locationCallback)
                 return@setOnRefreshListener
             }
+            if (odometerCount.toDouble()!! < viewModel.PoczatkowyStanLicznika.value.toDouble()){
+                Toast.makeText(requireContext(), "Niepoprawny stan licnzika!!")
+            }
             val kmInput = odometerCount.toDouble() -  viewModel.PoczatkowyStanLicznika.value!!
             val routeCheckpoint = locViewModel.getLocationData().value.toString().removePrefix("LocationModel(").removeSuffix(")").split(",").toTypedArray()
             val routeCheckpointMessage = routeCheckpoint.last().removePrefix(" latitude=") +","+ routeCheckpoint.first().removePrefix("longitude=")
             val rowToAdapterView = DaneRecycler(routeCheckpointMessage,odometerCount,kmInput.toString())
             viewModel.PoczatkowyStanLicznika.postValue(odometerCount.toDouble())
             viewModel.dodajDoRozliczenia(rowToAdapterView)
-            pojazdyRef.child(viewModel.RejestracjaPojazdu.value.toString())
+            vehicleReference.child(viewModel.RejestracjaPojazdu.value.toString())
                 .child("LokPojazdu")
                 .setValue(routeCheckpointMessage)
             Toast.makeText(requireContext(),
@@ -107,7 +108,6 @@ btn_Nawigacja.setOnClickListener {
         }
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -115,9 +115,6 @@ btn_Nawigacja.setOnClickListener {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_nawigacyjny,container,false)
     }
-
-
-
 
 //%%%%%%%%%%%%%Miejsce na funkcje %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -177,12 +174,7 @@ btn_Nawigacja.setOnClickListener {
                 tv_Longtitude.text = "Zapisano punkt"
                 viewModel.zapiszPunktTrasy(punktTrasy)
 
-
-
-
         }
-
-
 
     @SuppressLint("MissingPermission")
     private fun updateCurrentLoc() {
