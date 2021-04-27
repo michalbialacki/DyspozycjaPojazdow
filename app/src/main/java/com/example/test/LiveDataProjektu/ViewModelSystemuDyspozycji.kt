@@ -60,6 +60,9 @@ class ViewModelSystemuDyspozycji (private val savedStateHandle : SavedStateHandl
     val statusPojazdu : MutableLiveData<String> by lazy {
         MutableLiveData<String>("STATUS POJAZDU")
     }
+    val checkpointAddress : MutableLiveData<String> by lazy {
+        MutableLiveData<String>("Miejsce początkowe")
+    }
 
     var listaPojazdowTESTOWA = mutableListOf<String>()
 
@@ -75,6 +78,7 @@ class ViewModelSystemuDyspozycji (private val savedStateHandle : SavedStateHandl
         Latitude.postValue(dana)
         Longtitude.postValue(zmienna)
     }
+
     fun dodajDoRozliczenia (wiersz : DaneRecycler) {
         RozliczeniePojazdu.add(wiersz)
     }

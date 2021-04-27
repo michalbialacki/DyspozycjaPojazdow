@@ -2,11 +2,14 @@ package com.example.test
 
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.VelocityTracker
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -84,21 +87,33 @@ class start : Fragment() {
                 fusedLocationProviderClient.removeLocationUpdates(locationCallback)
                 return@setOnRefreshListener
             }
-            if (odometerCount.toDouble()!! < viewModel.PoczatkowyStanLicznika.value.toDouble()){
-                Toast.makeText(requireContext(), "Niepoprawny stan licnzika!!")
+            if (odometerCount.toDouble()!! < viewModel.PoczatkowyStanLicznika.value!!.toDouble()){
+                Toast.makeText(requireContext(), "Niepoprawny stan licnzika!!",Toast.LENGTH_SHORT).show()
+                return@setOnRefreshListener
             }
             val kmInput = odometerCount.toDouble() -  viewModel.PoczatkowyStanLicznika.value!!
-            val routeCheckpoint = locViewModel.getLocationData().value.toString().removePrefix("LocationModel(").removeSuffix(")").split(",").toTypedArray()
-            val routeCheckpointMessage = routeCheckpoint.last().removePrefix(" latitude=") +","+ routeCheckpoint.first().removePrefix("longitude=")
-            val rowToAdapterView = DaneRecycler(routeCheckpointMessage,odometerCount,kmInput.toString())
+            val routeCheckpoint = locViewModel.getLocationData().value
+                    .toString()
+                    .removePrefix("LocationModel(")
+                    .removeSuffix(")")
+                    .split(",")
+                    .toTypedArray()
+
+            val vehicleLatitude = routeCheckpoint.last()
+                    .removePrefix(" latitude=")
+                    .toDouble()
+            val vehicleLongtitude = routeCheckpoint.first()
+                    .removePrefix("longitude=")
+                    .toDouble()
+            val routeCheckpointMessage = vehicleLatitude.toString() + " , " + vehicleLongtitude.toString()
+            val vehicleAddress = getAddress(vehicleLatitude,vehicleLongtitude)
+            val rowToAdapterView = DaneRecycler(vehicleAddress,odometerCount,kmInput.toString())
             viewModel.PoczatkowyStanLicznika.postValue(odometerCount.toDouble())
             viewModel.dodajDoRozliczenia(rowToAdapterView)
             vehicleReference.child(viewModel.RejestracjaPojazdu.value.toString())
                 .child("LokPojazdu")
                 .setValue(routeCheckpointMessage)
-            Toast.makeText(requireContext(),
-                "Sprawdź poprawność wprowadzonego punktu!",
-                Toast.LENGTH_SHORT).show()
+
 
         }
 
@@ -121,11 +136,11 @@ btn_Nawigacja.setOnClickListener {
 
     private fun localizationDeclaration(){
         fusedLocationProviderClient =
-            LocationServices.getFusedLocationProviderClient(context!!)
+            LocationServices.getFusedLocationProviderClient(requireContext())
         locationrequest = LocationRequest.create().apply {
             interval = 2000
             fastestInterval = 1000
-            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+            priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
         }
 
         locationCallback = object : LocationCallback(){
@@ -164,15 +179,18 @@ btn_Nawigacja.setOnClickListener {
         checkPermits()
         fusedLocationProviderClient.lastLocation.addOnSuccessListener { location: Location? ->
             updateLiveData(location?.longitude,location?.latitude)
+            val checkPointAddress = getAddress(location!!.latitude,location!!.longitude)
+            viewModel.checkpointAddress.postValue(checkPointAddress)
+
         }
 
     }
     private fun updateLiveData (latitude : Double?, longtitude : Double?) {
 
         val punktTrasy= latitude.toString() + ";" + longtitude.toString()
-                tv_Latitude.text = "Zapisano punkt"
-                tv_Longtitude.text = "Zapisano punkt"
+                Toast.makeText(requireContext(),"Punkt zapisany - sprawdź rozliczenie pojazdu!",Toast.LENGTH_SHORT).show()
                 viewModel.zapiszPunktTrasy(punktTrasy)
+
 
         }
 
@@ -189,6 +207,13 @@ btn_Nawigacja.setOnClickListener {
 
     }
 
+    private fun getAddress (Lat : Double, Long: Double) : String {
+        var cityName = ""
+        var geocoder = Geocoder(requireContext(),Locale.getDefault())
+        var address : MutableList<Address> = geocoder.getFromLocation(Lat,Long,1)
+        cityName = address.get(0).getAddressLine(0)
+        return cityName
+    }
 
 
 }
