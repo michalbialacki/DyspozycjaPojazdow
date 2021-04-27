@@ -1,36 +1,19 @@
 package com.example.test.Fragmenty.DPKT
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.Navigation
-import androidx.viewpager.widget.ViewPager
-import com.example.test.DataClasses.FirebaseLiveData
-import com.example.test.LiveDataProjektu.FirebaseViewModel
-import com.example.test.LiveDataProjektu.LocationViewModel
 import com.example.test.LiveDataProjektu.ViewModelSystemuDyspozycji
 import com.example.test.R
 import com.google.firebase.database.*
-import com.google.firebase.database.core.view.DataEvent
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_wprowadzenie_sprawdzenie_danych_kierowcy.*
-import kotlinx.coroutines.flow.callbackFlow
-import java.awt.font.NumericShaper
-import java.lang.reflect.Array.get
-import java.util.*
-import kotlin.collections.ArrayList
 
 
-class WprowadzenieSprawdzenieDanychKierowcy : Fragment() {
+class DriverCheckout : Fragment() {
     private var database = FirebaseDatabase.getInstance()
     private var myRef = database.getReference("Kierowcy")
     private lateinit var viewModel : ViewModelSystemuDyspozycji
@@ -168,7 +151,7 @@ class WprowadzenieSprawdzenieDanychKierowcy : Fragment() {
 
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            WprowadzenieSprawdzenieDanychKierowcy().apply {
+            DriverCheckout().apply {
                 arguments = Bundle().apply {
 
                 }

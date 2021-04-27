@@ -87,27 +87,29 @@ class Logowanie : Fragment() {
     }
 
 
-    private fun userCheck(driversPasswordFirebase : String, driversPass: String, driversID: String, newReferenceLogin: DatabaseReference){
-        if(driversPasswordFirebase.isNotBlank()){
-            if (driversPass.equals(driversPasswordFirebase)){
-                if (driversID.equals("44121122") ){
-                    Navigation.findNavController(requireView()).navigate(R.id.action_logowanie_to_wprowadzenieSprawdzenieDanychKierowcy)
-                }
-                else {
-                    viewModel.ZapiszDaneUzytkownika(driversPass,driversID)
-                    saveVehicleList(newReferenceLogin)
-                    Navigation.findNavController(requireView()).navigate(R.id.action_logowanie_to_wyborPojazdu)
+    private fun userCheck(driversPasswordFirebase : String, driversPass: String, driversID: String, newReferenceLogin: DatabaseReference) {
+        if (driversPasswordFirebase.isNotBlank()) {
+            if (driversPass.equals(driversPasswordFirebase)) {
+
+
+                when (driversID) {
+                    "44121122" -> Navigation.findNavController(requireView())
+                        .navigate(R.id.action_logowanie_to_wprowadzenieSprawdzenieDanychKierowcy)
+                    "6568777378" -> Navigation.findNavController(requireView())
+                        .navigate(R.id.action_logowanie_to_adminMenu)
+                    else -> {
+                        viewModel.ZapiszDaneUzytkownika(driversPass, driversID)
+                        saveVehicleList(newReferenceLogin)
+                        Navigation.findNavController(requireView())
+                            .navigate(R.id.action_logowanie_to_wyborPojazdu)
+                    }
                 }
 
-            }
-                else {
-                    Toast.makeText(requireContext(),"Błędne hasło!",Toast.LENGTH_SHORT).show()}
-            }
-            else {
-                Toast.makeText(requireContext(),"Błędne ID",Toast.LENGTH_SHORT).show()
-
+            } else {
+                Toast.makeText(requireContext(), "Błędne hasło lub ID!", Toast.LENGTH_SHORT).show()
             }
         }
+    }
 
 
 
