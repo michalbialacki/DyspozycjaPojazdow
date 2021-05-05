@@ -13,6 +13,7 @@ import android.view.VelocityTracker
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -45,6 +46,7 @@ class start : Fragment() {
         super.onCreate(savedInstanceState)
 
     }
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

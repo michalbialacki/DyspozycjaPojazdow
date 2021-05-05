@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    override fun onBackPressed() {
+   /* override fun onBackPressed() {
         if (backPressedTime + 3000 >System.currentTimeMillis()){
             super.onBackPressed()
             findNavController(R.id.fragment).navigate(R.id.logowanie)
@@ -29,6 +29,6 @@ class MainActivity : AppCompatActivity() {
         backPressedTime = System.currentTimeMillis()
 
 
-    }
+    }*/
 }
 

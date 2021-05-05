@@ -3,6 +3,7 @@ package com.example.test.LiveDataProjektu
 
 import androidx.lifecycle.*
 import com.example.test.Adapter.DaneRecycler
+import com.example.test.Adapter.DriverDataClass
 import com.example.test.DataClasses.LocationLiveData
 import java.text.SimpleDateFormat
 import java.util.*
@@ -72,6 +73,12 @@ class ViewModelSystemuDyspozycji (private val savedStateHandle : SavedStateHandl
 
 
     var RozliczeniePojazdu = mutableListOf<DaneRecycler>()
+
+    var adminDriversList = mutableListOf<DriverDataClass>()
+    var adminVehicleList = mutableListOf<String>()
+    var driverListIDs = mutableListOf<String>()
+    var driverNameList = mutableListOf<String>()
+    var driverStatusList = mutableListOf<String>()
 
     fun zapiszWspolrzednePunktuTrasy(dana : Double?, zmienna : Double?) {
 

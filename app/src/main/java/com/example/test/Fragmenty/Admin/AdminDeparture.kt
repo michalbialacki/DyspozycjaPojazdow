@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import com.example.test.LiveDataProjektu.ViewModelSystemuDyspozycji
 import com.example.test.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -34,7 +37,9 @@ class AdminDeparture : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val viewModel = ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_admin_departure, container, false)
     }
 
