@@ -5,16 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.test.Interfaces.AdapterPositionInterface
 import com.example.test.Adapter.DriverAdapter
 import com.example.test.LiveDataProjektu.ViewModelSystemuDyspozycji
 import com.example.test.R
 import kotlinx.android.synthetic.main.fragment_admin_vehicle_list.*
 
 
-class AdminDriverList : Fragment() {
+class AdminDriverList : Fragment(), AdapterPositionInterface {
     private lateinit var viewModel: ViewModelSystemuDyspozycji
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +32,10 @@ class AdminDriverList : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
-       rcl_AdminVehicleRecycler.adapter = DriverAdapter(viewModel.adminDriversList)
         rcl_AdminVehicleRecycler.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL, false)
+        rcl_AdminVehicleRecycler.adapter = DriverAdapter(viewModel.adminDriversList,this)
+
+
     }
 
 
@@ -44,5 +46,12 @@ class AdminDriverList : Fragment() {
             AdminDriverList().apply {
 
             }
+    }
+
+    override fun onItemClick(position: Int) {
+        viewModel.adapterPositionViewModel.postValue(position)
+
+        //Toast.makeText(requireContext(),"${viewModel.adapterPositionViewModel.value}",Toast.LENGTH_SHORT).show()
+        //Navigation.findNavController(requireView()).navigate(R.id.driverSelected2)
     }
 }

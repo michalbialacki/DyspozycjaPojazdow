@@ -8,52 +8,51 @@
     tools:context=".Fragmenty.Admin.AdminMenu" >
 
     <Button
-        android:id="@+id/btn_Kierowcy"
+        android:id="@+id/btn_addDriver"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="128dp"
-        android:layout_marginTop="224dp"
-        android:layout_marginEnd="133dp"
-        android:layout_marginBottom="16dp"
-        android:text="Kierowcy"
-        app:layout_constraintBottom_toTopOf="@+id/btn_Pojazdy"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="16dp"
+        android:text="Dodaj kierowcę"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_Pojazdy"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="128dp"
-        android:layout_marginEnd="133dp"
-        android:layout_marginBottom="16dp"
-        android:text="Pojazdy"
-        app:layout_constraintBottom_toTopOf="@+id/btn_Rozkazy"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="16dp"
+        android:text="dodaj pojazd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/rcl_DriverRecycler" />
 
     <Button
         android:id="@+id/btn_Rozkazy"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="128dp"
-        android:layout_marginEnd="133dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="128dp"
+        android:layout_marginBottom="60dp"
         android:text="Rozkazy"
-        app:layout_constraintBottom_toTopOf="@+id/btn_PowiadomKierowce"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btn_PowiadomKierowce"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="128dp"
-        android:layout_marginEnd="133dp"
-        android:layout_marginBottom="260dp"
-        android:text="Powiadom kierowcę"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcl_VehicleAdapter"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="356dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/driver_cardview" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcl_DriverRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="140dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/driver_cardview" />
 </androidx.constraintlayout.widget.ConstraintLayout>

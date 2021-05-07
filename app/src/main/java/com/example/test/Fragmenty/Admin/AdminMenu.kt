@@ -5,159 +5,93 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import com.example.test.Adapter.DriverDataClass
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.test.Interfaces.AdapterPositionInterface
+import com.example.test.Adapter.DriverAdapter
+import com.example.test.Adapter.VehicleAdapter
+import com.example.test.Interfaces.BackPressed
 import com.example.test.R
 import kotlinx.android.synthetic.main.fragment_admin_menu.*
 import com.example.test.LiveDataProjektu.ViewModelSystemuDyspozycji
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 
-open class AdminMenu : Fragment() {
+class AdminMenu : Fragment(), AdapterPositionInterface, BackPressed {
+    private lateinit var viewModel: ViewModelSystemuDyspozycji
+
 
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getDataFromFirebaseAdmin()
+
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_admin_menu, container, false)
 
-        /*val callback = object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                Navigation.findNavController(requireView()).navigate(R.id.action_adminMenu_to_adminDeparture)
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(callback)*/
 
-        return inflater.inflate(R.layout.fragment_admin_menu, container, false)
+
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel = ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
 
 
-        btn_Kierowcy.setOnClickListener {
-            Navigation.findNavController(requireView()).navigate(R.id.action_adminMenu_to_adminDriverList)
+        rcl_DriverRecycler.layoutManager = LinearLayoutManager(
+            activity,
+            LinearLayoutManager.HORIZONTAL, false
+        )
+        rcl_DriverRecycler.adapter = DriverAdapter(viewModel.adminDriversList, this)
+        viewModel.adapterPositionViewModel.observe(viewLifecycleOwner, Observer {
+
+            if (it != -1) {
+                Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
+                //viewModel.adapterPositionViewModel.postValue(it)
+                Navigation.findNavController(requireView()).navigate(R.id.driverSelected)
+                viewModel.adapterPositionViewModel.removeObservers(viewLifecycleOwner)
+            }
+        })
+
+
+
+        rcl_VehicleAdapter.layoutManager = LinearLayoutManager(
+            activity,
+            LinearLayoutManager.HORIZONTAL, false
+        )
+        rcl_VehicleAdapter.adapter = VehicleAdapter(viewModel.adminVehicleList, this)
+
+
+
+
+        btn_addDriver.setOnClickListener {
+//            Navigation.findNavController(requireView())
+//                .navigate(R.id.action_adminMenu_to_adminDriverList)
         }
         btn_Pojazdy.setOnClickListener {
-            Navigation.findNavController(requireView()).navigate(R.id.action_adminMenu_to_adminVehicleList)
+            Navigation.findNavController(requireView())
+                .navigate(R.id.action_adminMenu_to_adminVehicleList)
         }
         btn_Rozkazy.setOnClickListener {
-            Navigation.findNavController(requireView()).navigate(R.id.action_adminMenu_to_adminDeparture)
+            Navigation.findNavController(requireView())
+                .navigate(R.id.action_adminMenu_to_adminDeparture)
         }
-    }
-
-
-
-    fun getDataFromFirebaseAdmin(){
-        var database = FirebaseDatabase.getInstance()
-        val vehicleRef = database.getReference("Pojazdy")
-        val driverRef = database.getReference("Kierowcy")
-        val viewModel = ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
-
-
-
-        driverRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                snapshot.children.forEach{
-                    val testList = it.key.toString()
-                    if (it.key.toString().isNotEmpty()){
-                        viewModel.driverListIDs.add(testList)
-                    }
-
-                }
-
-                viewModel.driverListIDs.removeLast()
-                viewModel.driverListIDs.removeLast()
-
-
-                for ((index, value) in viewModel.driverListIDs.withIndex()) {
-                    driverRef.child(viewModel.driverListIDs[index]).child("Imię i nazwisko").addListenerForSingleValueEvent(object :
-                        ValueEventListener {
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            viewModel.driverNameList.add(snapshot.getValue()
-                                .toString())
-
-
-
-                        }
-                        override fun onCancelled(error: DatabaseError) {
-                        }
-                    })
-                    driverRef.child(viewModel.driverListIDs[index]).child("Status kierowcy").addListenerForSingleValueEvent(object :
-                        ValueEventListener {
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            viewModel.driverStatusList.add(snapshot.getValue()
-                                .toString())
-                            val dataForRecycler = DriverDataClass(
-                                driverID = viewModel.driverListIDs[index],
-                                driverFullName = viewModel.driverNameList[index],
-                                driverStatus = viewModel.driverStatusList[index]
-                            )
-                            viewModel.adminDriversList.add(dataForRecycler)
-
-
-                        }
-
-                        override fun onCancelled(error: DatabaseError) {
-
-                        }
-                    })
-
-
-
-
-                }
-
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-
-        })
-
-
-
-        vehicleRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val vehicleList = snapshot.getValue()
-                    .toString()
-                    .removePrefix("[")
-                    .removeSuffix("]")
-                    .split(",")
-                    .toMutableList()
-
-                vehicleList.removeAt(0)
-                for ((index,value) in vehicleList.withIndex()){
-                    viewModel.adminVehicleList.add(value)
-                }
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-        })
-
-
-
-
 
     }
+
+
 
 
     companion object {
@@ -170,4 +104,25 @@ open class AdminMenu : Fragment() {
                     }
                 }
     }
+
+    override fun onItemClick(position: Int) {
+        viewModel.adapterPositionViewModel.postValue(position)
+    }
+
+    override fun backPressed() {
+        val callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                viewModel= ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
+                viewModel.driverListIDs.clear()
+                viewModel.vehicleListIDs.clear()
+                viewModel.adminDriversList.clear()
+                viewModel.adminVehicleList.clear()
+
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
+        Navigation.findNavController(requireView()).navigate(R.id.logowanie)
+    }
+
+
 }

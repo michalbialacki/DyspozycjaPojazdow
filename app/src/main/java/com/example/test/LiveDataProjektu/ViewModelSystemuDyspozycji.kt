@@ -4,6 +4,7 @@ package com.example.test.LiveDataProjektu
 import androidx.lifecycle.*
 import com.example.test.Adapter.DaneRecycler
 import com.example.test.Adapter.DriverDataClass
+import com.example.test.Adapter.adminVehicleDataClass
 import com.example.test.DataClasses.LocationLiveData
 import java.text.SimpleDateFormat
 import java.util.*
@@ -64,6 +65,9 @@ class ViewModelSystemuDyspozycji (private val savedStateHandle : SavedStateHandl
     val checkpointAddress : MutableLiveData<String> by lazy {
         MutableLiveData<String>("Miejsce początkowe")
     }
+    val adapterPositionViewModel : MutableLiveData<Int> by lazy {
+        MutableLiveData<Int>(-1)
+    }
 
     var listaPojazdowTESTOWA = mutableListOf<String>()
 
@@ -75,10 +79,16 @@ class ViewModelSystemuDyspozycji (private val savedStateHandle : SavedStateHandl
     var RozliczeniePojazdu = mutableListOf<DaneRecycler>()
 
     var adminDriversList = mutableListOf<DriverDataClass>()
-    var adminVehicleList = mutableListOf<String>()
+    var adminVehicleList = mutableListOf<adminVehicleDataClass>()
     var driverListIDs = mutableListOf<String>()
     var driverNameList = mutableListOf<String>()
     var driverStatusList = mutableListOf<String>()
+    var vehicleListIDs = mutableListOf<String>()
+    var vehicleLastLocation = mutableListOf<String>()
+    var vehicleStatus = mutableListOf<String>()
+    var vehicleOdometer = mutableListOf<Double>()
+    var vehicleType = mutableListOf<String>()
+
 
     fun zapiszWspolrzednePunktuTrasy(dana : Double?, zmienna : Double?) {
 
