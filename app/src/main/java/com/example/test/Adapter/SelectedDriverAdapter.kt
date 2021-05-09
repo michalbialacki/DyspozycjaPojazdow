@@ -9,18 +9,9 @@ import com.example.test.Interfaces.AdapterPositionInterface
 import com.example.test.R
 import kotlinx.android.synthetic.main.driver_cardview.view.*
 
-
-class VehicleAdapter (private val vehicleData : MutableList<adminVehicleDataClass>, val positionListener : AdapterPositionInterface) : RecyclerView.Adapter<VehicleAdapter.ViewHolder> (){
+class SelectedDriverAdapter (private val vehicleIDs: MutableList<String>) : RecyclerView.Adapter<SelectedDriverAdapter.ViewHolder> (){
     class ViewHolder (cardView: CardView) : RecyclerView.ViewHolder(cardView){
         val vehicleID : TextView = cardView.tv_VehicleID
-        val vehicleStatus : TextView = cardView.tv_vehicleType
-
-        fun gettingAdapterPositionOut(positionListener: AdapterPositionInterface){
-            itemView.setOnClickListener{
-                positionListener.onVehicleClicked(adapterPosition)
-            }
-        }
-
 
     }
 
@@ -33,20 +24,11 @@ class VehicleAdapter (private val vehicleData : MutableList<adminVehicleDataClas
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem = vehicleData[position]
+        val currentItem = vehicleIDs[position]
 
-        holder.vehicleID.text = currentItem.vehicleID
-        holder.vehicleStatus.text = currentItem.vehicleStatus
-        holder.gettingAdapterPositionOut(positionListener)
-
-
-
-
+        holder.vehicleID.text = currentItem
     }
-
-
-    //ArrayList<DaneRecycler>
-    override fun getItemCount() = vehicleData.size
+    override fun getItemCount() = vehicleIDs.size
 
 
 }

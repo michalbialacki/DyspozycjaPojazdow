@@ -48,10 +48,14 @@ class AdminDriverList : Fragment(), AdapterPositionInterface {
             }
     }
 
-    override fun onItemClick(position: Int) {
-        viewModel.adapterPositionViewModel.postValue(position)
+    override fun onDriverClicked(position: Int) {
+        viewModel.driverAdapterPosition.postValue(position)
 
         //Toast.makeText(requireContext(),"${viewModel.adapterPositionViewModel.value}",Toast.LENGTH_SHORT).show()
         //Navigation.findNavController(requireView()).navigate(R.id.driverSelected2)
+    }
+
+    override fun onVehicleClicked(position: Int) {
+        viewModel.vehicleAdapterPosition.postValue(position)
     }
 }

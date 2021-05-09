@@ -66,7 +66,11 @@ class AdminVehicleList : Fragment(), AdapterPositionInterface {
             }
     }
 
-    override fun onItemClick(position: Int) {
-        TODO("Not yet implemented")
+    override fun onDriverClicked(position: Int) {
+
+    }
+
+    override fun onVehicleClicked(position: Int) {
+
     }
 }

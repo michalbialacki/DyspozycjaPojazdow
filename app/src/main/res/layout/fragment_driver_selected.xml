@@ -5,13 +5,14 @@
     android:id="@+id/frameLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DriverSelected">
+    tools:context=".Fragmenty.Admin.DriverSelected">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/tv_selectedDriverName"
-        android:layout_width="166dp"
-        android:layout_height="31dp"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="96dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.065"
@@ -21,12 +22,21 @@
 
     <TextView
         android:id="@+id/tv_SelectedDriverStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="460dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_selectedDriverName"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Wartosc" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcl_selectedDriverVehiclesAdapter"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="220dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/driver_cardview" />/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

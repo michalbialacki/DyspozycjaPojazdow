@@ -65,11 +65,14 @@ class ViewModelSystemuDyspozycji (private val savedStateHandle : SavedStateHandl
     val checkpointAddress : MutableLiveData<String> by lazy {
         MutableLiveData<String>("Miejsce początkowe")
     }
-    val adapterPositionViewModel : MutableLiveData<Int> by lazy {
+    val driverAdapterPosition : MutableLiveData<Int> by lazy {
+        MutableLiveData<Int>(-1)
+    }
+    val vehicleAdapterPosition : MutableLiveData<Int> by lazy {
         MutableLiveData<Int>(-1)
     }
 
-    var listaPojazdowTESTOWA = mutableListOf<String>()
+    var vehicleList = mutableListOf<String>()
 
     var Dzien  = SimpleDateFormat("ddMMyyyyHHMM").format(Date())
 

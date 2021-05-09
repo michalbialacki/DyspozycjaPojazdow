@@ -18,7 +18,7 @@ class DriverAdapter (private val driverData : MutableList<DriverDataClass>, val 
 
         fun gettingAdapterPositionOut(positionListener: AdapterPositionInterface){
             itemView.setOnClickListener{
-                positionListener.onItemClick(adapterPosition)
+                positionListener.onDriverClicked(adapterPosition)
             }
         }
 

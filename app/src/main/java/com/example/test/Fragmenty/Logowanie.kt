@@ -98,7 +98,7 @@ class Logowanie : Fragment() {
 
 
                 when (driversID) {
-                    "44121122" -> Navigation.findNavController(requireView())
+                    "4412112244" -> Navigation.findNavController(requireView())
                         .navigate(R.id.action_logowanie_to_wprowadzenieSprawdzenieDanychKierowcy)
                     "6568777378" ->{
                         Navigation.findNavController(requireView())
@@ -127,11 +127,17 @@ class Logowanie : Fragment() {
         val driverRef = database.getReference("Kierowcy")
         val viewModel = ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
 
-        viewModel.driverListIDs.clear()
-        viewModel.vehicleListIDs.clear()
         viewModel.adminDriversList.clear()
         viewModel.adminVehicleList.clear()
-
+        viewModel.driverListIDs.clear()
+        viewModel.driverNameList.clear()
+        viewModel.driverStatusList.clear()
+        viewModel.vehicleListIDs.clear()
+        viewModel.vehicleLastLocation.clear()
+        viewModel.vehicleStatus.clear()
+        viewModel.vehicleOdometer.clear()
+        viewModel.vehicleType.clear()
+        viewModel.vehicleList.clear()
         driverRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 snapshot.children.forEach{

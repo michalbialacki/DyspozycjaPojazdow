@@ -86,20 +86,18 @@
         android:label="fragment_admin_menu"
         tools:layout="@layout/fragment_admin_menu" >
         <action
-            android:id="@+id/action_adminMenu_to_adminVehicleList"
-            app:destination="@id/adminVehicleList" />
-        <action
             android:id="@+id/action_adminMenu_to_adminDeparture"
             app:destination="@id/adminDeparture" />
         <action
             android:id="@+id/action_adminMenu_to_driverSelected"
             app:destination="@id/driverSelected" />
+        <action
+            android:id="@+id/action_adminMenu_to_vehicleSelected"
+            app:destination="@id/vehicleSelected" />
+        <action
+            android:id="@+id/action_adminMenu_to_addDriver"
+            app:destination="@id/addDriver" />
     </fragment>
-    <fragment
-        android:id="@+id/adminVehicleList"
-        android:name="com.example.test.Fragmenty.Admin.AdminVehicleList"
-        android:label="fragment_admin_vehicle_list"
-        tools:layout="@layout/fragment_admin_vehicle_list" />
     <fragment
         android:id="@+id/adminDeparture"
         android:name="com.example.test.Fragmenty.Admin.AdminDeparture"
@@ -111,6 +109,20 @@
         android:label="DriverSelected" >
         <action
             android:id="@+id/action_driverSelected_to_adminMenu"
+            app:destination="@id/adminMenu" />
+    </fragment>
+    <fragment
+        android:id="@+id/vehicleSelected"
+        android:name="com.example.test.Fragmenty.Admin.VehicleSelected"
+        android:label="fragment_vehicle_selected"
+        tools:layout="@layout/fragment_vehicle_selected" />
+    <fragment
+        android:id="@+id/addDriver"
+        android:name="com.example.test.Fragmenty.Admin.AddDriver"
+        android:label="fragment_add_driver"
+        tools:layout="@layout/fragment_add_driver" >
+        <action
+            android:id="@+id/action_addDriver_to_adminMenu"
             app:destination="@id/adminMenu" />
     </fragment>
 </navigation>

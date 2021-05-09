@@ -9,6 +9,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 interface AdapterPositionInterface {
-    fun onItemClick(position: Int)
-
+    fun onDriverClicked(position: Int)
+    fun onVehicleClicked(position: Int)
 }
