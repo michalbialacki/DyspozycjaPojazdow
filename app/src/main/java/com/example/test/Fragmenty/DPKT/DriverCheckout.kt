@@ -10,7 +10,7 @@ import androidx.navigation.Navigation
 import com.example.test.LiveDataProjektu.ViewModelSystemuDyspozycji
 import com.example.test.R
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_wprowadzenie_sprawdzenie_danych_kierowcy.*
+import kotlinx.android.synthetic.main.fragment_driver_checkout.*
 
 
 class DriverCheckout : Fragment() {
@@ -34,7 +34,7 @@ class DriverCheckout : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(
-            R.layout.fragment_wprowadzenie_sprawdzenie_danych_kierowcy,
+            R.layout.fragment_driver_checkout,
             container,
             false
         )

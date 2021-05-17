@@ -29,6 +29,7 @@ class AdminMenu : Fragment(), AdapterPositionInterface, BackPressed {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val viewModel = ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
 
 
     }
@@ -38,9 +39,6 @@ class AdminMenu : Fragment(), AdapterPositionInterface, BackPressed {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_admin_menu, container, false)
-
-
-
 
         return view
     }
@@ -56,40 +54,22 @@ class AdminMenu : Fragment(), AdapterPositionInterface, BackPressed {
             LinearLayoutManager.HORIZONTAL, false
         )
         rcl_DriverRecycler.adapter = DriverAdapter(viewModel.adminDriversList, this)
-//        viewModel.driverAdapterPosition.observe(viewLifecycleOwner, Observer {
-//
-//            if (it != -1) {
-//                Navigation.findNavController(requireView()).navigate(R.id.driverSelected)
-//                viewModel.driverAdapterPosition.removeObservers(viewLifecycleOwner)
-//            }
-//        })
-
-
-
         rcl_VehicleAdapter.layoutManager = LinearLayoutManager(
             activity,
             LinearLayoutManager.HORIZONTAL, false
         )
         rcl_VehicleAdapter.adapter = VehicleAdapter(viewModel.adminVehicleList, this)
-        viewModel.vehicleAdapterPosition.observe(viewLifecycleOwner, Observer {
-
-            if (it != -1) {
-
-                Navigation.findNavController(requireView()).navigate(R.id.vehicleSelected)
-                viewModel.vehicleAdapterPosition.removeObservers(viewLifecycleOwner)
-            }
-        })
 
 
              btn_addDriver.setOnClickListener {
             Navigation.findNavController(requireView())
                 .navigate(R.id.action_adminMenu_to_addDriver)
         }
-        /*btn_Pojazdy.setOnClickListener {
-            Navigation.findNavController(requireView())
-                .navigate(R.id.action_adminMenu_to_adminVehicleList)
+        btn_Pojazdy.setOnClickListener {
+            Navigation.findNavController(requireView()).navigate(R.id.action_adminMenu_to_addVehicle)
+
         }
-        btn_Rozkazy.setOnClickListener {
+        /*btn_Rozkazy.setOnClickListener {
             Navigation.findNavController(requireView())
                 .navigate(R.id.action_adminMenu_to_adminDeparture)
         }*/
@@ -117,6 +97,7 @@ class AdminMenu : Fragment(), AdapterPositionInterface, BackPressed {
 
     override fun onVehicleClicked(position: Int) {
         viewModel.vehicleAdapterPosition.postValue(position)
+        Navigation.findNavController(requireView()).navigate(R.id.vehicleSelected)
     }
 
     override fun backPressed() {

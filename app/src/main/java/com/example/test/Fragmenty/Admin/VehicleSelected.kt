@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.test.Adapter.adminVehicleDataClass
@@ -61,7 +62,7 @@ class VehicleSelected : Fragment(), BackPressed {
         viewModel = ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
         val mapFragment = childFragmentManager.findFragmentById(R.id.location_map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
-        viewModel.vehicleAdapterPosition.postValue(-1)
+
     }
 
     override fun backPressed() {
@@ -76,6 +77,11 @@ class VehicleSelected : Fragment(), BackPressed {
         viewModel.vehicleOdometer.clear()
         viewModel.vehicleType.clear()
         viewModel.vehicleList.clear()
-        Navigation.findNavController(requireView()).navigate(R.id.adminMenu)
+
+        viewModel.vehicleAdapterPosition.observe(viewLifecycleOwner, Observer {
+            if (it==-1)
+                Navigation.findNavController(requireView()).navigate(R.id.adminMenu)
+        })
+
     }
 }

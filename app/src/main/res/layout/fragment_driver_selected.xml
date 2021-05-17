@@ -37,6 +37,18 @@
         android:layout_marginTop="220dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/driver_cardview" />/>
+        tools:listitem="@layout/driver_cardview" />
+
+    <Button
+        android:id="@+id/btn_NewVehicle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="300dp"
+        android:layout_marginTop="80dp"
+        android:text="Button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_SelectedDriverStatus" />
+
+    />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

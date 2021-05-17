@@ -46,9 +46,8 @@ class Startowy : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
-        var Dzien  = SimpleDateFormat("ddMMyyyyHHMM").format(Date())
         val database = FirebaseDatabase.getInstance()
-        val myRef = database.getReference("Rozkazy wyjazdu").child("${viewModel.RejestracjaPojazdu.value}").child("$Dzien")
+        val myRef = database.getReference("Rozkazy wyjazdu").child("${viewModel.RejestracjaPojazdu.value}").child("${viewModel.Dzien}")
         val newRef = database.getReference("Kierowcy").child("${viewModel.IDUzytkownika.value}").child("Przypisane pojazdy")
 
 

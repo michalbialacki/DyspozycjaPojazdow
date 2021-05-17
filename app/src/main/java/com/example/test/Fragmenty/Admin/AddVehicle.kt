@@ -1,127 +1,64 @@
-package com.example.test.Fragmenty
+package com.example.test.Fragmenty.Admin
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.test.Adapter.DriverDataClass
 import com.example.test.Adapter.adminVehicleDataClass
+import com.example.test.Interfaces.BackPressed
 import com.example.test.LiveDataProjektu.ViewModelSystemuDyspozycji
 import com.example.test.R
-import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_logowanie.*
-import java.text.SimpleDateFormat
-import java.util.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import kotlinx.android.synthetic.main.fragment_add_vehicle.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
-class Logowanie : Fragment() {
+class AddVehicle : Fragment(), BackPressed {
 
+    private lateinit var viewModel: ViewModelSystemuDyspozycji
     private var database = FirebaseDatabase.getInstance()
-    private var myRef = database.getReference("Kierowcy")
-    private lateinit var viewModel : ViewModelSystemuDyspozycji
-
+    private var vehicleRef = database.getReference("Pojazdy")
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_logowanie, container, false)
-    }
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_add_vehicle, container, false)
 
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
-        var driversID : String = ""
-        var driversPass:String = ""
-        val newReferenceLogin = myRef.child("${viewModel.IDUzytkownika.value}").child("Przypisane pojazdy")
-        saveVehicleList(newReferenceLogin)
-        getDataFromFirebaseAdmin()
 
+        btn_AddVehicle.setOnClickListener{
+            var vehicleID = edt_VehicleID.text.toString()
+            var vehicleType = edt_Type.text.toString()
+            var vehicleOdometer = edt_Odometer.text.toString()
 
-
-        btn_ZatwierdzDaneKierowcy.setOnClickListener {
-
-            driversID = edt_IDKierowcy.text!!.toString()
-            driversPass = edt_HasloKierowcy.text!!.toString()
-            val postRef = myRef.child(driversID).child("Haslo")
-            userLogin(postRef,driversPass,driversID, newReferenceLogin)
-
-
-        }
-    }
-
-    private fun userLogin (postRef: DatabaseReference, driversPass : String, idKierowcy : String, nowyRef: DatabaseReference){
-        postRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val snapshotValue = dataSnapshot.getValue().toString()
-                userCheck(snapshotValue, driversPass, idKierowcy,nowyRef)
-
-            }
-            override fun onCancelled(databaeError: DatabaseError) {
-            }
-
-            })
+            vehicleRef.child(vehicleID).child("LokPojazdu").setValue("53.2123 , 20.2111")
+            vehicleRef.child(vehicleID).child("Marka i model").setValue(vehicleType)
+            vehicleRef.child(vehicleID).child("Stan licznika").setValue(vehicleOdometer)
+            vehicleRef.child(vehicleID).child("Status").setValue("Dostępny")
 
 
         }
 
-
-    private fun saveVehicleList (newReferenceLogin: DatabaseReference){
-        newReferenceLogin.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val datasnapshotValue = dataSnapshot.getValue().toString().removePrefix("[").removeSuffix("]")
-                viewModel.dodajPojazdDoListyWyboru(datasnapshotValue)
-            }
-
-                override fun onCancelled(databaeError: DatabaseError) {
-
-                }
-
-        })
     }
 
 
-    private fun userCheck(driversPasswordFirebase : String, driversPass: String, driversID: String, newReferenceLogin: DatabaseReference) {
-        if (driversPasswordFirebase.isNotBlank()) {
-            if (driversPass.equals(driversPasswordFirebase)) {
-
-
-                when (driversID) {
-                    "4412112244" -> Navigation.findNavController(requireView())
-                        .navigate(R.id.action_logowanie_to_wprowadzenieSprawdzenieDanychKierowcy)
-                    "6568777378" ->{
-                        Navigation.findNavController(requireView())
-                            .navigate(R.id.action_logowanie_to_adminMenu)
-                    }
-                    else -> {
-                        viewModel.ZapiszDaneUzytkownika(driversPass, driversID)
-                        saveVehicleList(newReferenceLogin)
-                        Navigation.findNavController(requireView())
-                            .navigate(R.id.action_logowanie_to_wyborPojazdu)
-                    }
-                }
-
-            } else {
-                Toast.makeText(requireContext(), "Błędne hasło lub ID!", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-
-    ////////////////////////GETDATA FOR ADMIN////////////////////////////////////////
 
     fun getDataFromFirebaseAdmin(){
         var database = FirebaseDatabase.getInstance()
@@ -294,9 +231,26 @@ class Logowanie : Fragment() {
     companion object {
 
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Logowanie().apply {
+        fun newInstance(param1: String, param2: String) {
 
             }
     }
+
+    override fun backPressed() {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                viewModel =
+                    ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
+                viewModel.driverListIDs.clear()
+                viewModel.vehicleListIDs.clear()
+                viewModel.adminDriversList.clear()
+                viewModel.adminVehicleList.clear()
+
+            }
+        }
+        getDataFromFirebaseAdmin()
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
+        Navigation.findNavController(requireView()).navigate(R.id.adminMenu)
+    }
+
 }
