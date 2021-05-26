@@ -62,6 +62,9 @@
         <action
             android:id="@+id/action_wyborPojazdu_to_startowy"
             app:destination="@id/startowy" />
+        <action
+            android:id="@+id/action_wyborPojazdu_to_departuresList"
+            app:destination="@id/departuresList" />
     </fragment>
     <fragment
         android:id="@+id/wprowadzenieSprawdzenieDanychKierowcy"
@@ -71,6 +74,9 @@
         <action
             android:id="@+id/action_wprowadzenieSprawdzenieDanychKierowcy_to_sprawdzenieStanuLicznika"
             app:destination="@id/sprawdzenieStanuLicznika" />
+        <action
+            android:id="@+id/action_wprowadzenieSprawdzenieDanychKierowcy_to_departuresList"
+            app:destination="@id/departuresList" />
     </fragment>
     <fragment
         android:id="@+id/sprawdzenieStanuLicznika"
@@ -141,5 +147,14 @@
         <action
             android:id="@+id/action_addDeparture_to_driverSelected"
             app:destination="@id/driverSelected" />
+    </fragment>
+    <fragment
+        android:id="@+id/departuresList"
+        android:name="com.example.test.Fragmenty.DPKT.DeparturesList"
+        android:label="fragment_departures_list"
+        tools:layout="@layout/fragment_departures_list" >
+        <action
+            android:id="@+id/action_departuresList_to_wprowadzenieSprawdzenieDanychKierowcy"
+            app:destination="@id/wprowadzenieSprawdzenieDanychKierowcy" />
     </fragment>
 </navigation>

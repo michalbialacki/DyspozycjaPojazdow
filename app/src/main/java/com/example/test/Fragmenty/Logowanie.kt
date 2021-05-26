@@ -1,6 +1,7 @@
 package com.example.test.Fragmenty
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.example.test.LiveDataProjektu.ViewModelSystemuDyspozycji
 import com.example.test.R
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_logowanie.*
+import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -109,6 +111,7 @@ class Logowanie : Fragment() {
                     else -> {
                         viewModel.ZapiszDaneUzytkownika(driversPass, driversID)
                         saveVehicleList(newReferenceLogin)
+                        getName(driversID)
                         Navigation.findNavController(requireView())
                             .navigate(R.id.action_logowanie_to_wyborPojazdu)
                     }
@@ -118,6 +121,20 @@ class Logowanie : Fragment() {
                 Toast.makeText(requireContext(), "Błędne hasło lub ID!", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun getName(driversID: String) {
+        myRef.child(driversID).child("Imię i nazwisko").addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                viewModel.driversName.postValue(snapshot.value.toString())
+
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
     }
 
 
@@ -143,8 +160,11 @@ class Logowanie : Fragment() {
         driverRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 snapshot.children.forEach{
-                    val testList = it.key.toString()
-                    if (it.key.toString().isNotEmpty()){
+                    val testList = it.key
+                            .toString()
+                    if (it.key
+                                    .toString()
+                                    .isNotEmpty()){
                         viewModel.driverListIDs.add(testList)
                     }
 
@@ -155,7 +175,9 @@ class Logowanie : Fragment() {
 
 
                 for ((index, value) in viewModel.driverListIDs.withIndex()) {
-                    driverRef.child(viewModel.driverListIDs[index]).child("Imię i nazwisko").addListenerForSingleValueEvent(object :
+                    driverRef.child(viewModel.driverListIDs[index])
+                            .child("Imię i nazwisko")
+                            .addListenerForSingleValueEvent(object :
                         ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             viewModel.driverNameList.add(snapshot.getValue()
@@ -167,7 +189,9 @@ class Logowanie : Fragment() {
                         override fun onCancelled(error: DatabaseError) {
                         }
                     })
-                    driverRef.child(viewModel.driverListIDs[index]).child("Status kierowcy").addListenerForSingleValueEvent(object :
+                    driverRef.child(viewModel.driverListIDs[index])
+                            .child("Status kierowcy")
+                            .addListenerForSingleValueEvent(object :
                         ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             viewModel.driverStatusList.add(snapshot.getValue()

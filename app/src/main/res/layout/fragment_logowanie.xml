@@ -26,7 +26,7 @@
         android:ems="10"
         android:hint="Wprowadź hasło"
         android:inputType="textPassword"
-        android:text="PelnaKontrola"
+        android:text="TESTOWE"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_IDKierowcy" />
@@ -40,7 +40,7 @@
         android:ems="10"
         android:hint="Wprowadź ID"
         android:inputType="number"
-        android:text="6568777378"
+        android:text="11223344"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

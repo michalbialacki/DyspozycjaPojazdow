@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/teal_700">
 
     <Spinner
         android:id="@+id/spn_WyborPojazdu"
@@ -41,5 +42,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:entries="@array/OpcjeStatusu"/>
+
+    <ImageView
+        android:id="@+id/img_depDriverList"
+        android:layout_width="72dp"
+        android:layout_height="85dp"
+        app:srcCompat="@android:drawable/ic_dialog_email"
+        tools:layout_editor_absoluteX="323dp"
+        tools:layout_editor_absoluteY="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

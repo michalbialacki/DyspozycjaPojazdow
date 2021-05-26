@@ -54,9 +54,11 @@ class AddDeparture : Fragment(), DatePickerDialog.OnDateSetListener, BackPressed
         btn_SaveDep.visibility = View.INVISIBLE
         btn_SaveDep.setOnClickListener{
             var route = edt_SetRoute.text.toString()
+            var depDisposer = edt_depDisposer.text.toString()
             departuresRef.child(savedDate).child(driverName).child(vehicleSelected).child("Trasa").setValue(route)
             departuresRef.child(savedDate).child(driverName).child(vehicleSelected).child("Cel wyjazdu").setValue(departurePurpose)
             departuresRef.child(savedDate).child(driverName).child(vehicleSelected).child("Rodzaj wyjazdu").setValue(departureType)
+            departuresRef.child(savedDate).child(driverName).child(vehicleSelected).child("Drugi dysponent").setValue(depDisposer)
         }
 
 

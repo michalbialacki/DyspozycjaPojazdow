@@ -5,12 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import com.example.test.Adapter.DeparturesDataClass
 import com.example.test.LiveDataProjektu.ViewModelSystemuDyspozycji
 import com.example.test.R
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_driver_checkout.*
+import kotlinx.android.synthetic.main.fragment_logowanie.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class DriverCheckout : Fragment() {
@@ -18,13 +23,13 @@ class DriverCheckout : Fragment() {
     private var myRef = database.getReference("Kierowcy")
     private lateinit var viewModel : ViewModelSystemuDyspozycji
     private var zmiennaDoTestowaniaWybieraniaZmiennej : String = ""
+    private var departureRef = database.getReference("Wyjazdy")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-
-
         }
+        getDeparturesList(departureRef)
 
     }
 
@@ -52,13 +57,17 @@ class DriverCheckout : Fragment() {
 
 
 
+
         lt_swipable.setOnRefreshListener {
             lt_swipable.isRefreshing = false
+            viewModel.departureList.clear()
+            getDeparturesList(departureRef)
             val numerRejestracyjny = edt_WprowadzNrRejestracyjny.text.toString()
             val idKierowcy = edt_IdKierowcy.text.toString()
             referencjaKierowcy = referencjaKierowcy.child(idKierowcy).child("Przypisane pojazdy")
             referencjaPojazdu = referencjaPojazdu.child(numerRejestracyjny).child("Status")
             podajWartoscZFirebase(referencjaKierowcy,numerRejestracyjny, referencjaPojazdu)
+
 
             //Navigation.findNavController(requireView()).navigate(R.id.action_wprowadzenieSprawdzenieDanychKierowcy_to_sprawdzenieStanuLicznika)
 
@@ -72,6 +81,10 @@ class DriverCheckout : Fragment() {
 
         }
 
+
+        img_CheckDepartures.setOnClickListener{
+            Navigation.findNavController(requireView()).navigate(R.id.action_wprowadzenieSprawdzenieDanychKierowcy_to_departuresList)
+        }
 
     }
 
@@ -106,8 +119,6 @@ class DriverCheckout : Fragment() {
                     zmiennaDoTestowaniaWybieraniaZmiennej = dataSnapshot.getValue().toString()
                     zbierzListePojazdow(zmiennaDoTestowaniaWybieraniaZmiennej,numerRejestracyjny)
 
-
-
                 }
             }
             override fun onCancelled(databaeError: DatabaseError) {
@@ -139,6 +150,45 @@ class DriverCheckout : Fragment() {
             else continue
             }
         }
+
+    private fun getDeparturesList (departureRef: DatabaseReference) {
+        var dzien = SimpleDateFormat("ddMMyyyy").format(Date())
+        viewModel = ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
+        departureRef.child(dzien).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                snapshot.children.forEach {
+                    if (viewModel.departureList.size < snapshot.children.count()){
+                    var driverName = it.key.toString()
+                    it.children.forEach {
+                        var driverVehicle = it.key.toString()
+                        val result = it.value.toString()
+                                .split(";")
+                                .toString()
+                                .split("=")
+                                .toString()
+                                .split(",")
+                        var departureToList = DeparturesDataClass(driverVehicle,
+                                driverName,
+                                result[1],
+                                result[3],
+                                result[7].removeSuffix("}]]"),
+                                result[5])
+                        viewModel.departureList.add(departureToList)
+                        }
+
+
+
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
+    }
 
 
 

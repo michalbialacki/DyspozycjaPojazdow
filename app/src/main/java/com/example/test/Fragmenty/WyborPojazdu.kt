@@ -11,21 +11,26 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import com.example.test.Adapter.DeparturesDataClass
 import com.example.test.LiveDataProjektu.ViewModelSystemuDyspozycji
 import com.example.test.R
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_wybor_pojazdu.*
 import timber.log.Timber
 import timber.log.Timber.Tree
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class WyborPojazdu : Fragment() {
     private lateinit var viewModel : ViewModelSystemuDyspozycji
     private var database = FirebaseDatabase.getInstance()
+    private var departureRef = database.getReference("Wyjazdy")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Timber.plant()
+
 
     }
 
@@ -34,6 +39,7 @@ class WyborPojazdu : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_wybor_pojazdu, container, false)
     }
 
@@ -55,9 +61,19 @@ class WyborPojazdu : Fragment() {
         vehicleChoice(vehiclesReference)
         changeStatus()
 
+
         btn_RozpocznijWyjazd.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_wyborPojazdu_to_startowy)
         }
+        img_depDriverList.setOnClickListener{
+            getDeparturesList(departureRef)
+
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.departureList.clear()
     }
 
 
@@ -136,6 +152,46 @@ class WyborPojazdu : Fragment() {
 
         }
     }
+    private fun getDeparturesList (departureRef: DatabaseReference) {
+        var dzien = SimpleDateFormat("ddMMyyyy").format(Date())
+        viewModel = ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
+        val driverName = viewModel.driversName.value.toString()
+        Toast.makeText(requireContext(),"${driverName}",Toast.LENGTH_SHORT).show()
+        departureRef.child(dzien).child(driverName).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                snapshot.children.forEach {
+                    if (viewModel.departureList.size < snapshot.children.count()){
+                            var driverVehicle = it.key.toString()
+                            val result = it.value.toString()
+                                    .split(";")
+                                    .toString()
+                                    .split("=")
+                                    .toString()
+                                    .split(",")
+                            var departureToList = DeparturesDataClass(driverVehicle,
+                                    driverName,
+                                    result[1],
+                                    result[3],
+                                    result[7].removeSuffix("}]]"),
+                                    result[5])
+                            viewModel.departureList.add(departureToList)
+                        }
+
+
+
+                    }
+                Navigation.findNavController(requireView()).navigate(R.id.action_wyborPojazdu_to_departuresList)
+                }
+
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
+    }
+
 
     companion object {
         @JvmStatic

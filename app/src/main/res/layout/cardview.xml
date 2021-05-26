@@ -11,7 +11,7 @@
         android:layout_height="50dp">
 
         <TextView
-            android:id="@+id/tv_Licznik"
+            android:id="@+id/tv_depPurp"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_marginTop="15dp"
@@ -25,7 +25,7 @@
             tools:text="stanLicznika" />
 
         <TextView
-            android:id="@+id/tv_PunktTrasy"
+            android:id="@+id/tv_depVehicle"
             android:layout_width="79dp"
             android:layout_height="40dp"
             android:layout_marginTop="15dp"
@@ -39,7 +39,7 @@
             tools:text="Punkt" />
 
         <TextView
-            android:id="@+id/tv_IloscKM"
+            android:id="@+id/tv_depName"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_marginTop="15dp"

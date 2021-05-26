@@ -14,8 +14,6 @@ import androidx.navigation.Navigation
 import com.example.test.LiveDataProjektu.ViewModelSystemuDyspozycji
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_startowy.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class Startowy : Fragment() {
@@ -47,7 +45,7 @@ class Startowy : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
         val database = FirebaseDatabase.getInstance()
-        val myRef = database.getReference("Rozkazy wyjazdu").child("${viewModel.RejestracjaPojazdu.value}").child("${viewModel.Dzien}")
+        val myRef = database.getReference("Rozkazy wyjazdu").child("${viewModel.RejestracjaPojazdu.value}").child("${viewModel.DayForUser}")
         val newRef = database.getReference("Kierowcy").child("${viewModel.IDUzytkownika.value}").child("Przypisane pojazdy")
 
 

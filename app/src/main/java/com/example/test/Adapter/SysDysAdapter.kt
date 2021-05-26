@@ -10,9 +10,9 @@ import kotlinx.android.synthetic.main.cardview.view.*
 
 class SysDyspAdapter (private val listaPunktowTrasy : MutableList<DaneRecycler> ) : RecyclerView.Adapter<SysDyspAdapter.ViewHolder> () {
     class ViewHolder (cardView: CardView) : RecyclerView.ViewHolder(cardView){
-        val punktTrasy : TextView = cardView.tv_PunktTrasy
-        val stanLicznika : TextView = cardView.tv_Licznik
-        val iloscKilometrow : TextView = cardView.tv_IloscKM
+        val punktTrasy : TextView = cardView.tv_depVehicle
+        val stanLicznika : TextView = cardView.tv_depPurp
+        val iloscKilometrow : TextView = cardView.tv_depName
 
     }
 

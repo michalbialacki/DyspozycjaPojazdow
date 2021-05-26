@@ -3,6 +3,7 @@ package com.example.test.LiveDataProjektu
 
 import androidx.lifecycle.*
 import com.example.test.Adapter.DaneRecycler
+import com.example.test.Adapter.DeparturesDataClass
 import com.example.test.Adapter.DriverDataClass
 import com.example.test.Adapter.adminVehicleDataClass
 import com.example.test.DataClasses.LocationLiveData
@@ -74,7 +75,11 @@ class ViewModelSystemuDyspozycji (private val savedStateHandle : SavedStateHandl
 
     var vehicleList = mutableListOf<String>()
 
-    var Dzien  = SimpleDateFormat("ddMMyyyyHHMM").format(Date())
+    var DayForUser  = SimpleDateFormat("ddMMyyyyHHMM").format(Date())
+    var departureList = mutableListOf<DeparturesDataClass>()
+    val driversName : MutableLiveData<String> by lazy {
+        MutableLiveData<String>("Podaj imię")
+    }
 
     var NazwaTrasy = mutableListOf<TrasaWPunktach>()
 
