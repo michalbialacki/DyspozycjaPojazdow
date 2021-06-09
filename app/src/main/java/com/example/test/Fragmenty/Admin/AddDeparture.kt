@@ -96,13 +96,26 @@ class AddDeparture : Fragment(), DatePickerDialog.OnDateSetListener, BackPressed
         savedDay = dayOfMonth
         savedMonth = month +1
         savedYear = year
+        var selectedMonth : String
+        var selectedDay : String
         if(savedMonth<10)
         {
-            savedDate = "${savedDay}"+"0"+"$savedMonth"+"$savedYear"
+            selectedMonth = "0"+"$savedMonth"
+        }
+        else
+        {
+            selectedMonth = savedMonth.toString()
+        }
+
+        if(savedDay<10)
+        {
+            selectedDay = "0"+"${savedDay}"
         }
         else{
-            savedDate = "${savedDay}"+"$savedMonth"+"$savedYear"
+            selectedDay = savedDay.toString()
         }
+
+            savedDate = "${selectedDay}"+"${selectedMonth}"+"${savedYear}"
 
 
         var checkDate = SimpleDateFormat("ddMMyyyy")

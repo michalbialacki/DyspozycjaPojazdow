@@ -52,7 +52,7 @@ class DeparturesList : Fragment(), AdapterPositionInterface {
         viewModel = ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
         rcl_DepartureRecycler.layoutManager = LinearLayoutManager(activity)
         rcl_DepartureRecycler.adapter = DepartureAdapter(viewModel.departureList, this)
-
+        Toast.makeText(requireContext(),"${viewModel.departureList}",Toast.LENGTH_SHORT).show()
         lt_RefreshList.setOnRefreshListener {
             lt_RefreshList.isRefreshing = false
         }
@@ -75,10 +75,21 @@ class DeparturesList : Fragment(), AdapterPositionInterface {
             setTitle("Wyjazd!!!1!!")
             if (viewModel.IDUzytkownika.value!="4412112244"){
                 setPositiveButton("Wyjeżdżam"){ dialogInterface: DialogInterface, i: Int ->
-                    ordersRef.child(viewModel.departureList[position].vehicleID).child(viewModel.DayForUser).child("Cel wyjazdu").setValue(viewModel.departureList[position].departurePurpose)
-                    ordersRef.child(viewModel.departureList[position].vehicleID).child(viewModel.DayForUser).child("Rodzaj przewozu").setValue(viewModel.departureList[position].departureType)
-                    ordersRef.child(viewModel.departureList[position].vehicleID).child(viewModel.DayForUser).child("Trasa").setValue(viewModel.departureList[position].departureRoute)
-                    ordersRef.child(viewModel.departureList[position].vehicleID).child(viewModel.DayForUser).child("Drugi dysponent").setValue(viewModel.departureList[position].departureDisposer)
+                    ordersRef.child(viewModel.departureList[position].vehicleID)
+                        .child(viewModel.DayForUser)
+                        .child("Cel wyjazdu")
+                        .setValue(viewModel.departureList[position].departurePurpose)
+                    ordersRef.child(viewModel.departureList[position].vehicleID)
+                        .child(viewModel.DayForUser)
+                        .child("Rodzaj przewozu")
+                        .setValue(viewModel.departureList[position].departureType)
+                    ordersRef.child(viewModel.departureList[position].vehicleID)
+                        .child(viewModel.DayForUser)
+                        .child("Trasa")
+                        .setValue(viewModel.departureList[position].departureRoute)
+                    ordersRef.child(viewModel.departureList[position].vehicleID)
+                        .child(viewModel.DayForUser).child("Drugi dysponent")
+                        .setValue(viewModel.departureList[position].departureDisposer)
 
 
                     Navigation.findNavController(requireView()).navigate(R.id.rozliczenie2)

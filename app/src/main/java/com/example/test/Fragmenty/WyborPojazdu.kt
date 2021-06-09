@@ -73,7 +73,7 @@ class WyborPojazdu : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        viewModel.departureList.clear()
+        //viewModel.departureList.clear()
     }
 
 
@@ -154,9 +154,12 @@ class WyborPojazdu : Fragment() {
     }
     private fun getDeparturesList (departureRef: DatabaseReference) {
         var dzien = SimpleDateFormat("ddMMyyyy").format(Date())
+            if (dzien.length<8){
+                dzien = "0"+dzien
+            }
         viewModel = ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
         val driverName = viewModel.driversName.value.toString()
-        Toast.makeText(requireContext(),"${driverName}",Toast.LENGTH_SHORT).show()
+
         departureRef.child(dzien).child(driverName).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 

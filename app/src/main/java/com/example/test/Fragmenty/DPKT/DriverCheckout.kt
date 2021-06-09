@@ -43,6 +43,7 @@ class DriverCheckout : Fragment() {
             container,
             false
         )
+        getDeparturesList(departureRef)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -158,25 +159,25 @@ class DriverCheckout : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 snapshot.children.forEach {
-                    if (viewModel.departureList.size < snapshot.children.count()){
-                    var driverName = it.key.toString()
-                    it.children.forEach {
-                        var driverVehicle = it.key.toString()
-                        val result = it.value.toString()
+                    if (viewModel.departureList.size < snapshot.children.count()) {
+                        var driverName = it.key.toString()
+                        it.children.forEach {
+                            var driverVehicle = it.key.toString()
+                            val result = it.value.toString()
                                 .split(";")
                                 .toString()
                                 .split("=")
                                 .toString()
                                 .split(",")
-                        var departureToList = DeparturesDataClass(driverVehicle,
+                            var departureToList = DeparturesDataClass(
+                                driverVehicle,
                                 driverName,
                                 result[1],
                                 result[3],
                                 result[7].removeSuffix("}]]"),
-                                result[5])
-                        viewModel.departureList.add(departureToList)
+                                result[5]
+                            )
                         }
-
 
 
                     }
