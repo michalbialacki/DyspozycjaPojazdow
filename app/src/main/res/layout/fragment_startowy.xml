@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primaryDarkColor"
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +19,7 @@
         android:foregroundGravity="center">
 
         <Button
-            android:id="@+id/btn_DoNawigacji"
+            android:id="@+id/btn_toNavi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Rozpocznij wyjazd"
@@ -30,7 +31,7 @@
             app:layout_constraintVertical_bias="0.975" />
 
         <Spinner
-            android:id="@+id/spn_RodzajPrzewozu"
+            android:id="@+id/spn_Type"
             android:layout_width="200dp"
             android:layout_height="40dp"
             android:layout_marginBottom="200dp"
@@ -39,16 +40,16 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <Spinner
-            android:id="@+id/spn_CelWyjazdu"
+            android:id="@+id/spn_Purpose"
             android:layout_width="200dp"
             android:layout_height="40dp"
             android:layout_marginBottom="85dp"
             android:entries="@array/celeWyjazdu"
-            app:layout_constraintBottom_toTopOf="@+id/spn_RodzajPrzewozu"
+            app:layout_constraintBottom_toTopOf="@+id/spn_Type"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
-            android:id="@+id/edt_PunktStartowy"
+            android:id="@+id/edt_Startpoint"
             android:layout_width="150dp"
             android:layout_height="45dp"
             android:layout_marginTop="250dp"
@@ -56,13 +57,13 @@
             android:ems="10"
             android:hint="Skąd"
             android:inputType="textPersonName"
-            app:layout_constraintBottom_toTopOf="@+id/spn_CelWyjazdu"
+            app:layout_constraintBottom_toTopOf="@+id/spn_Purpose"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
         <EditText
-            android:id="@+id/edt_PunktKoncowy"
+            android:id="@+id/edt_Finish"
             android:layout_width="150dp"
             android:layout_height="45dp"
             android:layout_marginTop="250dp"
@@ -76,7 +77,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <EditText
-            android:id="@+id/edt_DrugiDysponent"
+            android:id="@+id/edt_SecondDisp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="150dp"
@@ -84,7 +85,7 @@
             android:ems="10"
             android:hint="Drugi dysponent"
             android:inputType="textPersonName"
-            app:layout_constraintBottom_toTopOf="@+id/edt_PunktStartowy"
+            app:layout_constraintBottom_toTopOf="@+id/edt_Startpoint"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />

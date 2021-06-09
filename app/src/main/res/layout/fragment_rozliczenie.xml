@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primaryDarkColor"
     tools:context=".MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -16,7 +17,7 @@
         tools:listitem="@layout/cardview" />
 
     <Button
-        android:id="@+id/btn_DodajPunktTrasy"
+        android:id="@+id/btn_AddCheckpoint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
@@ -39,7 +40,7 @@
         app:layout_constraintVertical_bias="0.273" />
 
     <Button
-        android:id="@+id/btn_ZakonczPodroz"
+        android:id="@+id/btn_Finish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="zakończ podróż"

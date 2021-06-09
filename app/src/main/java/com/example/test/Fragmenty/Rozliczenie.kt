@@ -58,11 +58,11 @@ class Rozliczenie : Fragment() {
         czytajDaneZFireBase(postRef)
         Toast.makeText(requireContext(),"${viewModel.PoczatkowyStanLicznika.value}",Toast.LENGTH_SHORT).show()
 
-        btn_DodajPunktTrasy.setOnClickListener {
+        btn_AddCheckpoint.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_rozliczenie2_to_Nawigacyjny)
         }
 
-        btn_ZakonczPodroz.setOnClickListener {
+        btn_Finish.setOnClickListener {
             myRef.child("Rozliczenie Pojazdu").setValue(viewModel.RozliczeniePojazdu)
             Navigation.findNavController(view).navigate(R.id.action_rozliczenie2_to_wyborPojazdu)
         }

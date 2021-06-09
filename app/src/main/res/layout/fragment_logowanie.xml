@@ -4,21 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primaryDarkColor"
     tools:context=".MainActivity">
 
 
+
     <Button
-        android:id="@+id/btn_ZatwierdzDaneKierowcy"
+        android:id="@+id/btn_ConfirmDriverLoginData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="156dp"
         android:layout_marginTop="200dp"
-        android:text="Button"
+        android:text="Zaloguj"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_HasloKierowcy" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_GetDriverPass" />
 
     <EditText
-        android:id="@+id/edt_HasloKierowcy"
+        android:id="@+id/edt_GetDriverPass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="95dp"
@@ -29,10 +31,10 @@
         android:text="TESTOWE"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_IDKierowcy" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_DriverLogin" />
 
     <EditText
-        android:id="@+id/edt_IDKierowcy"
+        android:id="@+id/edt_DriverLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="95dp"

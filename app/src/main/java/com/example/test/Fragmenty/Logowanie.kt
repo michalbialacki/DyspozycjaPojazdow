@@ -1,7 +1,6 @@
 package com.example.test.Fragmenty
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,9 +14,6 @@ import com.example.test.LiveDataProjektu.ViewModelSystemuDyspozycji
 import com.example.test.R
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_logowanie.*
-import kotlinx.coroutines.delay
-import java.text.SimpleDateFormat
-import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -54,10 +50,10 @@ class Logowanie : Fragment() {
 
 
 
-        btn_ZatwierdzDaneKierowcy.setOnClickListener {
+        btn_ConfirmDriverLoginData.setOnClickListener {
 
-            driversID = edt_IDKierowcy.text!!.toString()
-            driversPass = edt_HasloKierowcy.text!!.toString()
+            driversID = edt_DriverLogin.text!!.toString()
+            driversPass = edt_GetDriverPass.text!!.toString()
             val postRef = myRef.child(driversID).child("Haslo")
             userLogin(postRef,driversPass,driversID, newReferenceLogin)
 

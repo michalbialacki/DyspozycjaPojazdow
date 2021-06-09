@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@color/teal_700">
+    android:background="@color/primaryDarkColor">
 
     <Spinner
         android:id="@+id/spn_WyborPojazdu"
@@ -47,8 +47,14 @@
         android:id="@+id/img_depDriverList"
         android:layout_width="72dp"
         android:layout_height="85dp"
-        app:srcCompat="@android:drawable/ic_dialog_email"
-        tools:layout_editor_absoluteX="323dp"
-        tools:layout_editor_absoluteY="16dp" />
+        android:layout_marginStart="323dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="99dp"
+        app:layout_constraintBottom_toTopOf="@+id/spn_WyborPojazdu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_dialog_email" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

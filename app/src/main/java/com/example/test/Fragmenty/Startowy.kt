@@ -58,7 +58,7 @@ class Startowy : Fragment() {
 
 
 
-        btn_DoNawigacji.setOnClickListener {
+        btn_toNavi.setOnClickListener {
             sprawdzWarunki(tablicaProgresu)
             tworzenieRozkazuWyjazdu(myRef)
             Navigation.findNavController(view).navigate(R.id.action_startowy_to_rozliczenie2)
@@ -69,7 +69,7 @@ class Startowy : Fragment() {
     //%%%%%%%%%%%FUNCTION SPACE%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     private fun wybranieCeluWyjazdu() {
-        spn_CelWyjazdu.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        spn_Purpose.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -95,7 +95,7 @@ class Startowy : Fragment() {
     }
 
     private fun wybranieRodzajuPrzewozu() {
-        spn_RodzajPrzewozu.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        spn_Type.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -123,13 +123,13 @@ class Startowy : Fragment() {
 
 
     private fun drugiDysponentDopisz() {
-        edt_DrugiDysponent.addTextChangedListener(object : TextWatcher {
+        edt_SecondDisp.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (edt_DrugiDysponent.text.length > 0) {
+                if (edt_SecondDisp.text.length > 0) {
                     tablicaProgresu.set(0, "1")
 
 
@@ -147,8 +147,8 @@ class Startowy : Fragment() {
 
             override fun afterTextChanged(s: Editable?) {
 
-                if (edt_DrugiDysponent.text.length > 0) {
-                    viewModel.DrugiDysponentDodaj(edt_DrugiDysponent.text.toString())
+                if (edt_SecondDisp.text.length > 0) {
+                    viewModel.DrugiDysponentDodaj(edt_SecondDisp.text.toString())
                     Toast.makeText(
                         requireContext(),
                         "Wprowadzono drugiego dysponenta!", Toast.LENGTH_SHORT).show()
@@ -164,14 +164,14 @@ class Startowy : Fragment() {
     }
 
     private fun wprowadzenieSkadDokad() {
-        edt_PunktKoncowy.addTextChangedListener(object : TextWatcher {
+        edt_Finish.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (edt_PunktKoncowy.text.length > 0) {
-                    viewModel.PunktKoncowyZapisz(edt_PunktKoncowy.text.toString())
+                if (edt_Finish.text.length > 0) {
+                    viewModel.PunktKoncowyZapisz(edt_Finish.text.toString())
                     wskaznikPunktuKoncowego = 1
                     sprawdzWskaznikObecnosciPunktowTrasy(
                         wskaznikPunktuStartu,
@@ -190,8 +190,8 @@ class Startowy : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (edt_PunktKoncowy.text.length > 0) {
-                    viewModel.PunktKoncowyZapisz(edt_PunktKoncowy.text.toString())
+                if (edt_Finish.text.length > 0) {
+                    viewModel.PunktKoncowyZapisz(edt_Finish.text.toString())
                     Toast.makeText(
                         requireContext(),
                         "Wprowadzono punkt końcowy trasy!",
@@ -208,14 +208,14 @@ class Startowy : Fragment() {
 
             }
         })
-        edt_PunktStartowy.addTextChangedListener(object : TextWatcher {
+        edt_Startpoint.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (edt_PunktStartowy.text.length > 0) {
-                    viewModel.PunktKoncowyZapisz(edt_PunktStartowy.text.toString())
+                if (edt_Startpoint.text.length > 0) {
+                    viewModel.PunktKoncowyZapisz(edt_Startpoint.text.toString())
                     wskaznikPunktuStartu = 1
                     sprawdzWskaznikObecnosciPunktowTrasy(
                         wskaznikPunktuStartu,
@@ -235,8 +235,8 @@ class Startowy : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (edt_PunktKoncowy.text.length > 0) {
-                    viewModel.PunktStartowyZapisz(edt_PunktStartowy.text.toString())
+                if (edt_Finish.text.length > 0) {
+                    viewModel.PunktStartowyZapisz(edt_Startpoint.text.toString())
                     Toast.makeText(
                         requireContext(),
                         "Wprowadzono punkt startowy trasy!",
@@ -259,7 +259,7 @@ class Startowy : Fragment() {
     private fun sprawdzWskaznikObecnosciPunktowTrasy(wskaznikPunktuStartu: Int,wskaznikPunktuKoncowego: Int) {
         if (wskaznikPunktuKoncowego === 1 && wskaznikPunktuStartu === 1) {
             tablicaProgresu.set(1, "1")
-            viewModel.zapiszPunktTrasy("${edt_PunktStartowy.text} - ${edt_PunktKoncowy.text}")
+            viewModel.zapiszPunktTrasy("${edt_Startpoint.text} - ${edt_Finish.text}")
         } else {
             tablicaProgresu.set(1, "0")
         }
@@ -273,9 +273,9 @@ class Startowy : Fragment() {
         }
 
     if(key>0){
-        btn_DoNawigacji.visibility=View.VISIBLE }
+        btn_toNavi.visibility=View.VISIBLE }
         else{
-            btn_DoNawigacji.visibility = View.INVISIBLE
+            btn_toNavi.visibility = View.INVISIBLE
 
     }
 }
