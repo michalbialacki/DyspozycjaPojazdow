@@ -4,36 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryDarkColor"
+    android:background="@drawable/gradient_back"
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="392dp"
-        android:layout_height="691dp"
+        android:id="@+id/constraintLayout3"
+        android:layout_width="400dp"
+        android:layout_height="500dp"
+        android:foregroundGravity="center"
+        android:background="@drawable/boxes"
+        android:backgroundTint="@color/primaryLightColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.4"
-        android:foregroundGravity="center">
-
-        <Button
-            android:id="@+id/btn_toNavi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rozpocznij wyjazd"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.866"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.975" />
+        app:layout_constraintVertical_bias="0.4">
 
         <Spinner
             android:id="@+id/spn_Type"
             android:layout_width="200dp"
             android:layout_height="40dp"
+            android:layout_marginStart="16dp"
             android:layout_marginBottom="200dp"
             android:entries="@array/opcjePrzewozu"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -43,7 +35,8 @@
             android:id="@+id/spn_Purpose"
             android:layout_width="200dp"
             android:layout_height="40dp"
-            android:layout_marginBottom="85dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="24dp"
             android:entries="@array/celeWyjazdu"
             app:layout_constraintBottom_toTopOf="@+id/spn_Type"
             app:layout_constraintStart_toStartOf="parent" />
@@ -52,43 +45,50 @@
             android:id="@+id/edt_Startpoint"
             android:layout_width="150dp"
             android:layout_height="45dp"
-            android:layout_marginTop="250dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="32dp"
             android:ems="10"
             android:hint="Skąd"
             android:inputType="textPersonName"
             app:layout_constraintBottom_toTopOf="@+id/spn_Purpose"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/edt_SecondDisp" />
 
         <EditText
             android:id="@+id/edt_Finish"
             android:layout_width="150dp"
             android:layout_height="45dp"
-            android:layout_marginTop="250dp"
-            android:layout_marginBottom="390dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:ems="10"
             android:hint="Dokąd"
             android:inputType="textPersonName"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/edt_SecondDisp" />
 
         <EditText
             android:id="@+id/edt_SecondDisp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="360dp"
             android:ems="10"
             android:hint="Drugi dysponent"
             android:inputType="textPersonName"
-            app:layout_constraintBottom_toTopOf="@+id/edt_Startpoint"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_toNavi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/makeroundcorner"
+            android:text="Rozpocznij wyjazd"
+            tools:layout_editor_absoluteX="191dp"
+            tools:layout_editor_absoluteY="654dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

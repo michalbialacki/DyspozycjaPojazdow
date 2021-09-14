@@ -5,56 +5,69 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@color/primaryDarkColor">
-
-    <Spinner
-        android:id="@+id/spn_WyborPojazdu"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="212dp"
-        android:layout_marginBottom="495dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:background="@drawable/gradient_back">
 
     <Button
         android:id="@+id/btn_RozpocznijWyjazd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="159dp"
-        android:layout_marginTop="104dp"
-        android:layout_marginEnd="159dp"
-        android:layout_marginBottom="330dp"
+        android:background="@drawable/makeroundcorner"
+        android:layout_marginStart="300dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
         android:text="Button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spn_WyborPojazdu" />
-
-    <Spinner
-        android:id="@+id/spn_StatusUzytkownika"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="90dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:entries="@array/OpcjeStatusu"/>
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <ImageView
         android:id="@+id/img_depDriverList"
         android:layout_width="72dp"
         android:layout_height="85dp"
         android:layout_marginStart="323dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="99dp"
-        app:layout_constraintBottom_toTopOf="@+id/spn_WyborPojazdu"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.024"
         app:srcCompat="@android:drawable/ic_dialog_email" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="250dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="200dp"
+        android:background="@drawable/boxes"
+        android:backgroundTint="@color/secondaryLightColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Spinner
+            android:id="@+id/spn_WyborPojazdu"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/makeroundcorner"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/primaryLightColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/spn_StatusUzytkownika"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/makeroundcorner"
+            android:backgroundTint="@color/primaryLightColor"
+            android:entries="@array/OpcjeStatusu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spn_WyborPojazdu" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

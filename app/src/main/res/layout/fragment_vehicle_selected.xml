@@ -4,19 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
-    android:background="@color/primaryDarkColor"
+    android:background="@drawable/gradient_back"
     android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/tv_VehicleOdometer"
-        android:layout_width="163dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="33dp"
-        android:layout_marginTop="16dp"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_VehicleType"
-        tools:text="Odometer" />
 
     <fragment
         android:id="@+id/location_map"
@@ -30,39 +19,51 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="664dp"
-        android:layout_marginEnd="40dp"
-        android:background="#359c5e"
-        android:padding="8dp"
-        android:text="jazda"
-        android:textColor="#ffffff"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="320dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="428dp"
+        android:layout_marginEnd="64dp"
+        android:background="@drawable/boxes"
+        android:backgroundTint="@color/primaryLightColor"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_VehicleType"
-        android:layout_width="163dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="33dp"
-        android:layout_marginTop="49dp"
-        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/location_map"
-        tools:text="VehicleType" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tv_SelectedVehicleStatus"
-        android:layout_width="163dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_VehicleOdometer"
-        tools:text="Status" />
+        <TextView
+            android:id="@+id/tv_SelectedVehicleStatus"
+            android:layout_width="163dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Status" />
+
+        <TextView
+            android:id="@+id/tv_VehicleOdometer"
+            android:layout_width="163dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="64dp"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Odometer" />
+
+        <TextView
+            android:id="@+id/tv_VehicleType"
+            android:layout_width="163dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="128dp"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="VehicleType" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

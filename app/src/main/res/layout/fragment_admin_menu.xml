@@ -5,7 +5,7 @@
     android:id="@+id/lt_Constrain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryDarkColor"
+    android:background="@drawable/gradient_back"
     tools:context=".Fragmenty.Admin.AdminMenu" >
 
     <Button
@@ -15,6 +15,7 @@
         android:layout_marginTop="70dp"
         android:layout_marginEnd="16dp"
         android:text="Dodaj kierowcę"
+        android:background="@drawable/makeroundcorner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,6 +26,7 @@
         android:layout_marginTop="11dp"
         android:layout_marginEnd="16dp"
         android:text="dodaj pojazd"
+        android:background="@drawable/makeroundcorner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rcl_DriverRecycler" />
 
@@ -35,6 +37,7 @@
         android:layout_marginEnd="128dp"
         android:layout_marginBottom="60dp"
         android:text="Rozkazy"
+        android:background="@drawable/makeroundcorner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

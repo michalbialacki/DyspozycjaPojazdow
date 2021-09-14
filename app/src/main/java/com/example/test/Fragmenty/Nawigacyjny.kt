@@ -26,6 +26,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.cardview.*
 import kotlinx.android.synthetic.main.fragment_nawigacyjny.*
 import java.util.*
+import kotlin.math.round
+
 
 class start : Fragment() {
 
@@ -91,7 +93,7 @@ class start : Fragment() {
                 Toast.makeText(requireContext(), "Niepoprawny stan licnzika!!",Toast.LENGTH_SHORT).show()
                 return@setOnRefreshListener
             }
-            val kmInput = odometerCount.toDouble() -  viewModel.PoczatkowyStanLicznika.value!!
+            val kmInput = Math.round((odometerCount.toDouble() -  viewModel.PoczatkowyStanLicznika.value!!)*100.0)/100.0
             val routeCheckpoint = locViewModel.getLocationData().value
                     .toString()
                     .removePrefix("LocationModel(")

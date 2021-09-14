@@ -5,30 +5,34 @@
     android:id="@+id/frameLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryDarkColor"
+    android:background="@drawable/gradient_back"
     tools:context=".Fragmenty.Admin.DriverSelected">
 
     <!-- TODO: Update blank fragment layout -->
+
     <TextView
         android:id="@+id/tv_selectedDriverName"
         android:layout_width="match_parent"
         android:layout_height="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="44dp"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.065"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Wartosc" />
 
     <TextView
         android:id="@+id/tv_SelectedDriverStatus"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="32dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="460dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_selectedDriverName"
         tools:text="Wartosc" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -44,11 +48,15 @@
         android:id="@+id/btn_NewVehicle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="300dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="64dp"
         android:text="Button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_SelectedDriverStatus" />
+        android:background="@drawable/makeroundcorner"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     />
 

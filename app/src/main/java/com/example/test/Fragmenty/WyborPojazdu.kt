@@ -184,7 +184,13 @@ class WyborPojazdu : Fragment() {
 
 
                     }
-                Navigation.findNavController(requireView()).navigate(R.id.action_wyborPojazdu_to_departuresList)
+                if (viewModel.departureList.isEmpty()){
+                    Toast.makeText(requireContext(),"Brak wyjazdów na dziś",Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    Navigation.findNavController(requireView()).navigate(R.id.action_wyborPojazdu_to_departuresList)
+
+                }
                 }
 
 

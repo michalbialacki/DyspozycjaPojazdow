@@ -9,18 +9,15 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import com.example.test.Adapter.adminVehicleDataClass
 import com.example.test.Interfaces.BackPressed
 import com.example.test.LiveDataProjektu.ViewModelSystemuDyspozycji
 import com.example.test.R
 
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.fragment_driver_selected.*
 import kotlinx.android.synthetic.main.fragment_vehicle_selected.*
 
 class VehicleSelected : Fragment(), BackPressed {
@@ -43,9 +40,9 @@ class VehicleSelected : Fragment(), BackPressed {
                                     .toMutableList()
 
 
-        val sydney = LatLng(selectedVehicleLatLng[0].toDouble()!!,selectedVehicleLatLng[1].toDouble()!!)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Selected vehicle"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,15f))
+        val vehiclePosition = LatLng(selectedVehicleLatLng[0].toDouble()!!,selectedVehicleLatLng[1].toDouble()!!)
+        googleMap.addMarker(MarkerOptions().position(vehiclePosition).title("Selected vehicle"))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(vehiclePosition,15f))
         tv_VehicleType.text = viewModel.vehicleType[vehicleAdapterPosition]
         tv_SelectedVehicleStatus.text = viewModel.vehicleStatus[vehicleAdapterPosition]
         tv_VehicleOdometer.text = viewModel.vehicleOdometer[vehicleAdapterPosition].toString()

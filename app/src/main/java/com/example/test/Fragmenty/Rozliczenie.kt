@@ -53,6 +53,9 @@ class Rozliczenie : Fragment() {
             if (viewModel.RozliczeniePojazdu.size >0){
                 tv_StartText.visibility = View.INVISIBLE
             }
+        if (viewModel.RozliczeniePojazdu.isNotEmpty()){
+            tv_StartText.visibility = View.GONE
+        }
 
 
         czytajDaneZFireBase(postRef)
@@ -64,6 +67,7 @@ class Rozliczenie : Fragment() {
 
         btn_Finish.setOnClickListener {
             myRef.child("Rozliczenie Pojazdu").setValue(viewModel.RozliczeniePojazdu)
+            viewModel.RozliczeniePojazdu.clear()
             Navigation.findNavController(view).navigate(R.id.action_rozliczenie2_to_wyborPojazdu)
         }
 

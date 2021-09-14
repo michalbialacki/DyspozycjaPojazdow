@@ -5,39 +5,9 @@
     android:id="@+id/frameLayout6"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryDarkColor"
+    android:background="@drawable/gradient_back"
     tools:context=".Fragmenty.Admin.AddDeparture">
 
-
-    <Spinner
-        android:id="@+id/spn_DepartureType"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginBottom="432dp"
-        android:entries="@array/opcjePrzewozu"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Spinner
-        android:id="@+id/spn_DeparturePurpose"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginBottom="32dp"
-        android:entries="@array/celeWyjazdu"
-        app:layout_constraintBottom_toTopOf="@+id/spn_DepartureType"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btn_datePick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="108dp"
-        android:text="Wybierz dzień wyjazdu"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_SaveDep"
@@ -45,31 +15,84 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="280dp"
         android:layout_marginBottom="124dp"
-        android:text="Button"
+        android:text="Zatwierdź"
+        android:background="@drawable/makeroundcorner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/edt_SetRoute"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="320dp"
+        android:layout_height="400dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:hint="POCZĄTEK - KONIEC"
-        android:inputType="textPersonName"
+        android:layout_marginTop="96dp"
+        android:background="@drawable/boxes"
+        android:backgroundTint="@color/primaryLightColor"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spn_DepartureType" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/edt_depDisposer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:hint="Drugi dysponent"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_SetRoute" />
+        <Spinner
+            android:id="@+id/spn_DepartureType"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="104dp"
+            android:entries="@array/opcjePrzewozu"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spn_DeparturePurpose" />
+
+        <Spinner
+            android:id="@+id/spn_DeparturePurpose"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="31dp"
+            android:layout_marginEnd="104dp"
+            android:entries="@array/celeWyjazdu"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_datePick" />
+
+        <EditText
+            android:id="@+id/edt_SetRoute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="94dp"
+            android:ems="10"
+            android:hint="POCZĄTEK - KONIEC"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spn_DepartureType" />
+
+        <EditText
+            android:id="@+id/edt_depDisposer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="94dp"
+            android:ems="10"
+            android:hint="Drugi dysponent"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edt_SetRoute" />
+
+        <Button
+            android:id="@+id/btn_datePick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="64dp"
+            android:background="@drawable/makeroundcorner"
+            android:text="Data wyjazdu"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
