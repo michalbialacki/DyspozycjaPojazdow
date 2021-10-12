@@ -98,9 +98,13 @@ class Logowanie : Fragment() {
 
 
                 when (driversID) {
-                    "4412112244" -> Navigation.findNavController(requireView())
-                        .navigate(R.id.action_logowanie_to_wprowadzenieSprawdzenieDanychKierowcy)
+                    "4412112244" -> {
+                        viewModel.IDUzytkownika.postValue("4412112244")
+                        Navigation.findNavController(requireView())
+                            .navigate(R.id.action_logowanie_to_wprowadzenieSprawdzenieDanychKierowcy)
+                    }
                     "6568777378" ->{
+                    viewModel.ZapiszDaneUzytkownika(driversPass, driversID)
                         Navigation.findNavController(requireView())
                             .navigate(R.id.action_logowanie_to_adminMenu)
                     }

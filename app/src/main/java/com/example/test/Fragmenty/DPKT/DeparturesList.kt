@@ -52,10 +52,13 @@ class DeparturesList : Fragment(), AdapterPositionInterface {
         viewModel = ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
         rcl_DepartureRecycler.layoutManager = LinearLayoutManager(activity)
         rcl_DepartureRecycler.adapter = DepartureAdapter(viewModel.departureList, this)
-        Toast.makeText(requireContext(),"${viewModel.departureList}",Toast.LENGTH_SHORT).show()
         lt_RefreshList.setOnRefreshListener {
             lt_RefreshList.isRefreshing = false
         }
+        if (viewModel.IDUzytkownika.value.equals("4412112244")){
+            Toast.makeText(requireContext(),,Toast.LENGTH_SHORT).show()
+        }
+
 
     }
 
@@ -65,53 +68,59 @@ class DeparturesList : Fragment(), AdapterPositionInterface {
 
     }
 
+
     override fun onDriverClicked(position: Int) {
 
         val builder = AlertDialog.Builder(requireContext())
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.departure_popup,null)
-        Toast.makeText(requireContext(),"$position",Toast.LENGTH_SHORT).show()
-        with(builder){
-            setTitle("Wyjazd!!!1!!")
-            if (viewModel.IDUzytkownika.value!="4412112244"){
-                setPositiveButton("Wyjeżdżam"){ dialogInterface: DialogInterface, i: Int ->
-                    ordersRef.child(viewModel.departureList[position].vehicleID)
-                        .child(viewModel.DayForUser)
-                        .child("Cel wyjazdu")
-                        .setValue(viewModel.departureList[position].departurePurpose)
-                    ordersRef.child(viewModel.departureList[position].vehicleID)
-                        .child(viewModel.DayForUser)
-                        .child("Rodzaj przewozu")
-                        .setValue(viewModel.departureList[position].departureType)
-                    ordersRef.child(viewModel.departureList[position].vehicleID)
-                        .child(viewModel.DayForUser)
-                        .child("Trasa")
-                        .setValue(viewModel.departureList[position].departureRoute)
-                    ordersRef.child(viewModel.departureList[position].vehicleID)
-                        .child(viewModel.DayForUser).child("Drugi dysponent")
-                        .setValue(viewModel.departureList[position].departureDisposer)
+        if (viewModel.IDUzytkownika.value == "4412112244") {
 
-
-                    Navigation.findNavController(requireView()).navigate(R.id.rozliczenie2)
-                }
-                setNegativeButton("Nie wyjeżdżam"){ dialogInterface: DialogInterface, i: Int ->
-                    Toast.makeText(requireContext(),"PRZEGRAŁ",Toast.LENGTH_SHORT).show()
-                }
-            }
-            else{
-                setPositiveButton("Wyjazd"){ dialogInterface: DialogInterface, i: Int ->
-                    viewModel.departureList.removeAt(position)
-                    rcl_DepartureRecycler.adapter!!.notifyDataSetChanged()
-                }
-                setNegativeButton("Nie wyjazd"){ dialogInterface: DialogInterface, i: Int ->
-                    Toast.makeText(requireContext(),"PRZEGRAŁ",Toast.LENGTH_SHORT).show()
-                }
-            }
-
-
-            setView(dialogLayout)
-            show()
         }
+        else{
+            with(builder){
+                setTitle("Wyjazd!!!1!!")
+                if (viewModel.IDUzytkownika.value!="4412112244"){
+                    setPositiveButton("Wyjeżdżam"){ dialogInterface: DialogInterface, i: Int ->
+                        ordersRef.child(viewModel.departureList[position].vehicleID)
+                            .child(viewModel.DayForUser)
+                            .child("Cel wyjazdu")
+                            .setValue(viewModel.departureList[position].departurePurpose)
+                        ordersRef.child(viewModel.departureList[position].vehicleID)
+                            .child(viewModel.DayForUser)
+                            .child("Rodzaj przewozu")
+                            .setValue(viewModel.departureList[position].departureType)
+                        ordersRef.child(viewModel.departureList[position].vehicleID)
+                            .child(viewModel.DayForUser)
+                            .child("Trasa")
+                            .setValue(viewModel.departureList[position].departureRoute)
+                        ordersRef.child(viewModel.departureList[position].vehicleID)
+                            .child(viewModel.DayForUser).child("Drugi dysponent")
+                            .setValue(viewModel.departureList[position].departureDisposer)
+
+
+                        Navigation.findNavController(requireView()).navigate(R.id.rozliczenie2)
+                    }
+                    setNegativeButton("Nie wyjeżdżam"){ dialogInterface: DialogInterface, i: Int ->
+                        Toast.makeText(requireContext(),"PRZEGRAŁ",Toast.LENGTH_SHORT).show()
+                    }
+                }
+                else{
+                    setPositiveButton("Wyjazd"){ dialogInterface: DialogInterface, i: Int ->
+                        viewModel.departureList.removeAt(position)
+                        rcl_DepartureRecycler.adapter!!.notifyDataSetChanged()
+                    }
+                    setNegativeButton("Nie wyjazd"){ dialogInterface: DialogInterface, i: Int ->
+                        Toast.makeText(requireContext(),"PRZEGRAŁ",Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+
+                setView(dialogLayout)
+                show()
+            }
+        }
+
 
 
         //viewModel.departureList.removeAt(position)

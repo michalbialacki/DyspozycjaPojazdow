@@ -4,75 +4,135 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="@color/teal_200"
+    app:cardBackgroundColor="@color/primaryLightColor"
     app:cardCornerRadius="60dp"
     android:layout_marginBottom="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
->
+        android:layout_height="300dp">
+
+        <TextView
+            android:id="@+id/tv_depName"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="104dp"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_depVehicle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="vehicleDriver" />
+
+        <TextView
+            android:id="@+id/tv_depRoute"
+            android:layout_width="200dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="44dp"
+            android:textAlignment="textStart"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_depDisposer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.99"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_depPurp"
+            tools:text="depRoute" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="208dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="44dp"
+            android:text="Trasa:"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/tv_depDisposer"
+            app:layout_constraintEnd_toStartOf="@+id/tv_depRoute"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_celWyjazdu" />
+
+        <TextView
+            android:id="@+id/txt_celWyjazdu"
+            android:layout_width="208dp"
+            android:layout_height="45dp"
+            android:text="Cel wyjazdu:"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/textView4"
+            app:layout_constraintEnd_toStartOf="@+id/tv_depPurp"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_typWyjazdu" />
 
         <TextView
             android:id="@+id/tv_depPurp"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textAlignment="center"
+            android:layout_width="200dp"
+            android:layout_height="45dp"
+            android:textAlignment="textStart"
+            android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/tv_depRoute"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.99"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_depType"
             tools:text="depPurple" />
 
         <TextView
-            android:id="@+id/tv_depVehicle"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:id="@+id/txt_typWyjazdu"
+            android:layout_width="208dp"
+            android:layout_height="45dp"
+            android:text="Rodzaj wyjazdu:"
             android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/txt_celWyjazdu"
+            app:layout_constraintEnd_toStartOf="@+id/tv_depType"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_numerRejestracyjny" />
+
+        <TextView
+            android:id="@+id/txt_numerRejestracyjny"
+            android:layout_width="208dp"
+            android:layout_height="45dp"
+            android:text="Numer rejestracyjny pojazdu:"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/txt_typWyjazdu"
+            app:layout_constraintEnd_toStartOf="@+id/tv_depVehicle"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_depName" />
+
+        <TextView
+            android:id="@+id/tv_depVehicle"
+            android:layout_width="200dp"
+            android:layout_height="45dp"
+            android:textAlignment="textStart"
+            android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/tv_depType"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.99"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_depName"
             tools:text="vehicleID" />
 
         <TextView
-            android:id="@+id/tv_depName"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textAlignment="center"
-            app:layout_constraintBottom_toTopOf="@+id/tv_depVehicle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="vehicleDriver" />
-
-        <TextView
             android:id="@+id/tv_depType"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textAlignment="center"
+            android:layout_width="200dp"
+            android:layout_height="45dp"
+            android:textAlignment="textStart"
+            android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/tv_depPurp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.99"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_depVehicle"
             tools:text="depType" />
-
-        <TextView
-            android:id="@+id/tv_depRoute"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginBottom="44dp"
-            android:textAlignment="center"
-            app:layout_constraintBottom_toTopOf="@+id/tv_depDisposer"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_depPurp"
-            tools:text="depRoute" />
 
         <TextView
             android:id="@+id/tv_depDisposer"
@@ -80,11 +140,13 @@
             android:layout_height="40dp"
             android:text="depDisposer"
             android:textAlignment="center"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_depRoute" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
 

@@ -43,7 +43,7 @@ class DriverCheckout : Fragment() {
             container,
             false
         )
-        getDeparturesList(departureRef)
+        //getDeparturesList(departureRef)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,6 +53,7 @@ class DriverCheckout : Fragment() {
         var referencjaKierowcy = database.getReference("Kierowcy")
         var referencjaPojazdu = database.getReference("Pojazdy")
         btn_Dalej.visibility = View.INVISIBLE
+
 
 
 
@@ -157,30 +158,34 @@ class DriverCheckout : Fragment() {
         viewModel = ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
         departureRef.child(dzien).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                Toast.makeText(requireContext(),"${snapshot.value.toString()}",Toast.LENGTH_SHORT).show()
 
                 snapshot.children.forEach {
-                    if (viewModel.departureList.size < snapshot.children.count()) {
-                        var driverName = it.key.toString()
-                        it.children.forEach {
-                            var driverVehicle = it.key.toString()
-                            val result = it.value.toString()
-                                .split(";")
-                                .toString()
-                                .split("=")
-                                .toString()
-                                .split(",")
-                            var departureToList = DeparturesDataClass(
-                                driverVehicle,
-                                driverName,
-                                result[1],
-                                result[3],
-                                result[7].removeSuffix("}]]"),
-                                result[5]
-                            )
+                    it.children.forEach{
+                        if (viewModel.departureList.size < snapshot.children.count()) {
+                            var driverName = it.key.toString()
+                            it.children.forEach {
+                                var driverVehicle = it.key.toString()
+                                val result = it.value.toString()
+                                    .split(";")
+                                    .toString()
+                                    .split("=")
+                                    .toString()
+                                    .split(",")
+                                var departureToList = DeparturesDataClass(
+                                    driverVehicle,
+                                    driverName,
+                                    result[1],
+                                    result[3],
+                                    result[7].removeSuffix("}]]"),
+                                    result[5]
+                                )
+                            }
+
+                            TODO("Poprawić logikę, zrobić tablicę obiektów 'rozkazow' i utworzyc z nich recycler")
                         }
-
-
                     }
+
                 }
             }
 

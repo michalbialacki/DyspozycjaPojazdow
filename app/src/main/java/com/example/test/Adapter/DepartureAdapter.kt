@@ -36,12 +36,12 @@ class DepartureAdapter(private val departureData : MutableList<DeparturesDataCla
     override fun onBindViewHolder(holder: DepartureAdapter.ViewHolder, position: Int) {
         val currentItem = departureData[position]
 
-        holder.vehicleID.text = currentItem.vehicleID
+        holder.vehicleID.text =currentItem.vehicleID
         holder.vehicleDriver.text = currentItem.driverName
         holder.depPurple.text = currentItem.departurePurpose
         holder.depType.text = currentItem.departureType
         holder.depRoute.text = currentItem.departureRoute
-        holder.depDisposer.text = "Drugi dyspoytor: " + currentItem.departureDisposer
+        holder.depDisposer.text ="Dysponent: "+currentItem.departureDisposer
         holder.gettingAdapterPositionOut(positionListener)
 
     }

@@ -4,47 +4,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryDarkColor"
+    android:background="@drawable/gradient_back"
     tools:context=".MainActivity">
-
 
 
     <Button
         android:id="@+id/btn_ConfirmDriverLoginData"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="156dp"
-        android:layout_marginTop="200dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginBottom="85dp"
+        android:background="@drawable/boxes"
         android:text="Zaloguj"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.948"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_GetDriverPass" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_GetDriverPass"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/edt_GetDriverPass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="95dp"
-        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/editbox"
         android:ems="10"
         android:hint="Wprowadź hasło"
         android:inputType="textPassword"
-        android:text="TESTOWE"
+        android:text="TEST"
         android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_DriverLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_DriverLogin"
+        tools:layout_editor_absoluteX="100dp" />
 
     <EditText
         android:id="@+id/edt_DriverLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="95dp"
-        android:layout_marginTop="130dp"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginTop="436dp"
+        android:background="@drawable/editbox"
         android:ems="10"
         android:hint="Wprowadź ID"
         android:inputType="number"
-        android:text="11223344"
+        android:text="4412112244"
         android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="194dp"
+        android:layout_height="172dp"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/wat" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
