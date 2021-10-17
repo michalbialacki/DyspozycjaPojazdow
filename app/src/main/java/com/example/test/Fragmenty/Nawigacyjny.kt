@@ -71,9 +71,9 @@ class start : Fragment() {
                 .removeSuffix(")")
                 .split(",")
                 .toTypedArray()
-            tv_Longtitude.text = "Longitude= " + localizationMessage.first()
+            tv_Longtitude.text = "Dł. geo.= " + localizationMessage.first()
                 .removePrefix("longitude=")
-            tv_Latitude.text = "Latitude= " + localizationMessage.last()
+            tv_Latitude.text = "Szer. geo. = " + localizationMessage.last()
                 .removePrefix(" latitude=")
         })
 

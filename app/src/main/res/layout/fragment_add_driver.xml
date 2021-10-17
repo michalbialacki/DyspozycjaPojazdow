@@ -10,23 +10,23 @@
 
     <Button
         android:id="@+id/btn_Accpet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="286dp"
-        android:layout_marginTop="356dp"
+        android:layout_width="160dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="327dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="60dp"
-        android:text="Button"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/makeroundcorner"
+        android:text="Dodaj kierowcę"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout5"
         android:layout_width="320dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="96dp"
+        android:layout_height="245dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="92dp"
         android:background="@drawable/boxes"
         android:backgroundTint="@color/primaryLightColor"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,12 +38,12 @@
             android:layout_height="40dp"
 
             android:layout_marginStart="16dp"
-            android:layout_marginTop="96dp"
+            android:layout_marginTop="16dp"
             android:ems="10"
             android:hint="Zatwierdź hasło"
             android:inputType="textPassword"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/edt_DriverPassword" />
 
         <EditText
             android:id="@+id/edt_DriverNames"
@@ -62,18 +62,18 @@
             android:layout_width="210dp"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="16dp"
             android:ems="10"
             android:hint="Podaj hasło kierowcy"
             android:inputType="textPassword"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/edt_DriverNames" />
 
         <Spinner
             android:id="@+id/spn_AddVehicle"
             android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
             android:layout_marginBottom="31dp"
             android:background="@drawable/makeroundcorner"
             android:backgroundTint="@color/primaryColor"

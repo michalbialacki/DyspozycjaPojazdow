@@ -56,7 +56,7 @@ class DeparturesList : Fragment(), AdapterPositionInterface {
             lt_RefreshList.isRefreshing = false
         }
         if (viewModel.IDUzytkownika.value.equals("4412112244")){
-            Toast.makeText(requireContext(),,Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),"XD",Toast.LENGTH_SHORT).show()
         }
 
 
@@ -79,9 +79,9 @@ class DeparturesList : Fragment(), AdapterPositionInterface {
         }
         else{
             with(builder){
-                setTitle("Wyjazd!!!1!!")
+                setTitle("Zatwierdź wyjazd")
                 if (viewModel.IDUzytkownika.value!="4412112244"){
-                    setPositiveButton("Wyjeżdżam"){ dialogInterface: DialogInterface, i: Int ->
+                    setPositiveButton("Potwierdzam"){ dialogInterface: DialogInterface, i: Int ->
                         ordersRef.child(viewModel.departureList[position].vehicleID)
                             .child(viewModel.DayForUser)
                             .child("Cel wyjazdu")
