@@ -69,10 +69,10 @@ class AdminMenu : Fragment(), AdapterPositionInterface, BackPressed {
             Navigation.findNavController(requireView()).navigate(R.id.action_adminMenu_to_addVehicle)
 
         }
-        /*btn_Rozkazy.setOnClickListener {
+        btn_Rozkazy.setOnClickListener {
             Navigation.findNavController(requireView())
-                .navigate(R.id.action_adminMenu_to_adminDeparture)
-        }*/
+                .navigate(R.id.action_adminMenu_to_showDepartures)
+        }
 
     }
 

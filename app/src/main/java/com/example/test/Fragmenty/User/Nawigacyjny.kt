@@ -1,4 +1,4 @@
-package com.example.test
+package com.example.test.Fragmenty.User
 
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
@@ -19,6 +19,7 @@ import com.example.test.Adapter.DaneRecycler
 import com.example.test.DataClasses.PozycjaTablicy
 import com.example.test.LiveDataProjektu.LocationViewModel
 import com.example.test.LiveDataProjektu.ViewModelSystemuDyspozycji
+import com.example.test.R
 import com.google.android.gms.location.*
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -26,7 +27,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.cardview.*
 import kotlinx.android.synthetic.main.fragment_nawigacyjny.*
 import java.util.*
-import kotlin.math.round
 
 
 class start : Fragment() {

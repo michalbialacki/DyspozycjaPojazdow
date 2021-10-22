@@ -1,4 +1,4 @@
-package com.example.test.Fragmenty
+package com.example.test.Fragmenty.User
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -44,7 +44,9 @@ class Rozliczenie : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
         val database = FirebaseDatabase.getInstance()
-        val myRef = database.getReference("Rozkazy wyjazdu").child("${viewModel.RejestracjaPojazdu.value}").child("${viewModel.DayForUser}")
+        val myRef = database.getReference("Rozkazy wyjazdu")
+                .child("${viewModel.RejestracjaPojazdu.value}")
+                .child("${viewModel.dataSamp.value}")
         val postRef = myRef.child("Rozliczenie Pojazdu")
         var i : Int = 0
 

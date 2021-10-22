@@ -9,11 +9,24 @@
     <TextView
         android:id="@+id/tv_depStatusShow"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="Czy rozpocząć wybrany przejazd?"
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/edt_driverIDforPST"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/editbox"
+        android:ems="10"
+        android:hint="Podaj ID kierowcy"
+        android:inputType="number"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@+id/tv_depStatusShow"
+        tools:layout_editor_absoluteX="98dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

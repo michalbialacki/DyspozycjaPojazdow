@@ -1,6 +1,8 @@
 package com.example.test.Fragmenty.DPKT
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +11,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.test.Adapter.DeparturesDataClass
+import com.example.test.DataClasses.RozkazWyjazdu
 import com.example.test.LiveDataProjektu.ViewModelSystemuDyspozycji
 import com.example.test.R
 import com.google.firebase.database.*
@@ -158,33 +161,37 @@ class DriverCheckout : Fragment() {
         viewModel = ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
         departureRef.child(dzien).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                Toast.makeText(requireContext(),"${snapshot.value.toString()}",Toast.LENGTH_SHORT).show()
+                //gets drivers' names as key
+                snapshot.children.forEach() {
+                    if (viewModel.departureList.size < snapshot.children.count()) {
+                        var driverName = it.key.toString()
 
-                snapshot.children.forEach {
-                    it.children.forEach{
-                        if (viewModel.departureList.size < snapshot.children.count()) {
-                            var driverName = it.key.toString()
-                            it.children.forEach {
-                                var driverVehicle = it.key.toString()
-                                val result = it.value.toString()
+                        //gets vehicleID as key
+                        it.children.forEach() {
+                            Log.d(TAG, "DOSTALEM: ${it}")
+                            var driverVehicle = it.key.toString()
+                            // gets rest as value
+                            val result = it.value.toString()
                                     .split(";")
                                     .toString()
                                     .split("=")
                                     .toString()
                                     .split(",")
-                                var departureToList = DeparturesDataClass(
-                                    driverVehicle,
+
+                            var orderData = DeparturesDataClass(driverVehicle,
                                     driverName,
                                     result[1],
                                     result[3],
                                     result[7].removeSuffix("}]]"),
-                                    result[5]
-                                )
-                            }
+                                    result[5])
+                            viewModel.departureList.add(orderData)
 
-                            TODO("Poprawić logikę, zrobić tablicę obiektów 'rozkazow' i utworzyc z nich recycler")
+
                         }
+
+
                     }
+
 
                 }
             }

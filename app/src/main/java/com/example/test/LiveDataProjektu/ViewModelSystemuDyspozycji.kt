@@ -7,6 +7,7 @@ import com.example.test.Adapter.DeparturesDataClass
 import com.example.test.Adapter.DriverDataClass
 import com.example.test.Adapter.adminVehicleDataClass
 import com.example.test.DataClasses.LocationLiveData
+import com.example.test.DataClasses.RozkazWyjazdu
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -80,6 +81,10 @@ class ViewModelSystemuDyspozycji (private val savedStateHandle : SavedStateHandl
     val driversName : MutableLiveData<String> by lazy {
         MutableLiveData<String>("Podaj imię")
     }
+    val dataSamp : MutableLiveData<String> by lazy {
+        MutableLiveData<String>(DayForUser)
+    }
+
 
     var NazwaTrasy = mutableListOf<TrasaWPunktach>()
 
@@ -136,6 +141,10 @@ class ViewModelSystemuDyspozycji (private val savedStateHandle : SavedStateHandl
 
         przypisanePojazdydoKierowcy.postValue(nrRejestracjiPojazdu)
 
+    }
+    fun changeDataStamp (dataStamp : String)
+    {
+        dataSamp.value = dataStamp
     }
 
 

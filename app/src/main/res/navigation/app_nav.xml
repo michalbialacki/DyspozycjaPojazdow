@@ -6,7 +6,7 @@
     app:startDestination="@id/logowanie">
     <fragment
         android:id="@+id/Nawigacyjny"
-        android:name="com.example.test.start"
+        android:name="com.example.test.Fragmenty.User.start"
         android:label="fragment_start"
         tools:layout="@layout/fragment_nawigacyjny" >
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/startowy"
-        android:name="com.example.test.Startowy"
+        android:name="com.example.test.Fragmenty.User.Startowy"
         android:label="fragment_startowy"
         tools:layout="@layout/fragment_startowy" >
         <action
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/rozliczenie2"
-        android:name="com.example.test.Fragmenty.Rozliczenie"
+        android:name="com.example.test.Fragmenty.User.Rozliczenie"
         android:label="Rozliczenie" >
         <action
             android:id="@+id/action_rozliczenie2_to_Nawigacyjny"
@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/logowanie"
-        android:name="com.example.test.Fragmenty.Logowanie"
+        android:name="com.example.test.Fragmenty.User.Logowanie"
         android:label="Logowanie"
         app:startDestination="@id/action_logowanie_to_wyborPojazdu">
         <action
@@ -56,7 +56,7 @@
     </fragment>
     <fragment
         android:id="@+id/wyborPojazdu"
-        android:name="com.example.test.Fragmenty.WyborPojazdu"
+        android:name="com.example.test.Fragmenty.User.WyborPojazdu"
         android:label="fragment_wybor_pojazdu"
         tools:layout="@layout/fragment_wybor_pojazdu" >
         <action
@@ -104,6 +104,9 @@
         <action
             android:id="@+id/action_adminMenu_to_addVehicle"
             app:destination="@id/addVehicle" />
+        <action
+            android:id="@+id/action_adminMenu_to_showDepartures"
+            app:destination="@id/showDepartures" />
     </fragment>
     <fragment
         android:id="@+id/driverSelected"
@@ -157,4 +160,9 @@
             android:id="@+id/action_departuresList_to_wprowadzenieSprawdzenieDanychKierowcy"
             app:destination="@id/wprowadzenieSprawdzenieDanychKierowcy" />
     </fragment>
+    <fragment
+        android:id="@+id/showDepartures"
+        android:name="com.example.test.Fragmenty.Admin.ShowDepartures"
+        android:label="fragment_show_departures"
+        tools:layout="@layout/fragment_show_departures" />
 </navigation>

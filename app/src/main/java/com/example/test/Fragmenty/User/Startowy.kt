@@ -1,4 +1,4 @@
-package com.example.test
+package com.example.test.Fragmenty.User
 
 import android.os.Bundle
 import android.text.Editable
@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.test.LiveDataProjektu.ViewModelSystemuDyspozycji
+import com.example.test.R
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_startowy.*
 

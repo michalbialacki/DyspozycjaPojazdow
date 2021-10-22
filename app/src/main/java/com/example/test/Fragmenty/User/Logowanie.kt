@@ -1,4 +1,4 @@
-package com.example.test.Fragmenty
+package com.example.test.Fragmenty.User
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -112,6 +112,7 @@ class Logowanie : Fragment() {
                         viewModel.ZapiszDaneUzytkownika(driversPass, driversID)
                         saveVehicleList(newReferenceLogin)
                         getName(driversID)
+                        getDataStamp(driversID)
                         Navigation.findNavController(requireView())
                             .navigate(R.id.action_logowanie_to_wyborPojazdu)
                     }
@@ -127,6 +128,19 @@ class Logowanie : Fragment() {
         myRef.child(driversID).child("Imię i nazwisko").addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 viewModel.driversName.postValue(snapshot.value.toString())
+
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+    }
+    private fun getDataStamp(driversID: String) {
+        myRef.child(driversID).child("DataStamp").addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                viewModel.changeDataStamp(snapshot.value.toString())
 
 
             }

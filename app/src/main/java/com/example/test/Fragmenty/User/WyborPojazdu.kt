@@ -1,4 +1,4 @@
-package com.example.test.Fragmenty
+package com.example.test.Fragmenty.User
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -17,7 +17,6 @@ import com.example.test.R
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_wybor_pojazdu.*
 import timber.log.Timber
-import timber.log.Timber.Tree
 import java.text.SimpleDateFormat
 import java.util.*
 
