@@ -109,7 +109,7 @@ class start : Fragment() {
                     .toDouble()
             val routeCheckpointMessage = vehicleLatitude.toString() + " , " + vehicleLongtitude.toString()
             val vehicleAddress = getAddress(vehicleLatitude,vehicleLongtitude)
-            val rowToAdapterView = DaneRecycler(vehicleAddress,odometerCount,kmInput.toString())
+            val rowToAdapterView = DaneRecycler(vehicleAddress,odometerCount,kmInput.toString(), routeCheckpointMessage)
             viewModel.PoczatkowyStanLicznika.postValue(odometerCount.toDouble())
             viewModel.dodajDoRozliczenia(rowToAdapterView)
             vehicleReference.child(viewModel.RejestracjaPojazdu.value.toString())

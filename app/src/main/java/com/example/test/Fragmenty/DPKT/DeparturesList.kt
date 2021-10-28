@@ -113,11 +113,16 @@ class DeparturesList : Fragment(), AdapterPositionInterface {
                                     .setValue(viewModel.departureList[position].departureType)
                             ordersRef.child(viewModel.departureList[position].vehicleID)
                                     .child(viewModel.DayForUser)
-                                    .child("Trasa")
+                                    .child("Kurs")
                                     .setValue(viewModel.departureList[position].departureRoute)
                             ordersRef.child(viewModel.departureList[position].vehicleID)
                                     .child(viewModel.DayForUser).child("Drugi dysponent")
                                     .setValue(viewModel.departureList[position].departureDisposer)
+                            ordersRef.child(viewModel.departureList[position].vehicleID)
+                                    .child(viewModel.DayForUser)
+                                    .child("Kierowca")
+                                    .setValue(viewModel.departureList[position].driverName)
+                            viewModel.RejestracjaPojazdu.postValue(viewModel.departureList[position].vehicleID)
 
                             Log.d(TAG, "TESTSET: ${driverID.text}")
                             driverRef.child(driverID.text.toString()).child("DataStamp").setValue("${viewModel.DayForUser}")
@@ -135,6 +140,7 @@ class DeparturesList : Fragment(), AdapterPositionInterface {
                     setPositiveButton("Zrealizuj"){ dialogInterface: DialogInterface, i: Int ->
                         if (driverID.text.isNotEmpty())
                         {
+                            viewModel.RejestracjaPojazdu.postValue(viewModel.departureList[position].vehicleID)
                             viewModel.changeDataStamp(driverID.text.toString())
                             Navigation.findNavController(requireView()).navigate(R.id.rozliczenie2)
                         }

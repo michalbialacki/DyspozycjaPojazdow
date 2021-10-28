@@ -11,13 +11,20 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModelProvider
 import com.example.test.LiveDataProjektu.ViewModelSystemuDyspozycji
 import com.example.test.R
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_show_departures.*
 import kotlinx.android.synthetic.main.fragment_wybor_pojazdu.*
+import java.lang.reflect.Type
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 import kotlin.math.log
+import kotlin.reflect.typeOf
 
 
 class ShowDepartures : Fragment() {
@@ -39,10 +46,11 @@ class ShowDepartures : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val database = FirebaseDatabase.getInstance()
         val viewModel = ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
-        lateinit var vehiclesIDDropdown : MutableList<String>
+        var vehiclesIDDropdown = mutableListOf<String>()
         viewModel.adminVehicleList.forEach {
             vehiclesIDDropdown.add(it.vehicleID)
         }
+
 
             val adminVehicleSpinner = view.findViewById<Spinner>(R.id.spn_DeparturesSpin)
             val vehicleAdapter = ArrayAdapter<String>(requireContext(),
@@ -68,7 +76,7 @@ class ShowDepartures : Fragment() {
                 val database = FirebaseDatabase.getInstance()
                 var ordersReference = database.getReference("Rozkazy wyjazdu")
                 var vehicleID = parent?.getItemAtPosition(position).toString()
-                lateinit var orderTable : MutableList <String>
+                var orderTable = mutableListOf<String>()
                 orderTable.clear()
 
                 //FIREBASE GET dates
@@ -87,7 +95,7 @@ class ShowDepartures : Fragment() {
         }
     }
 
-    private fun chooseDate() {
+    private fun chooseDate(vehicleID: String) {
         spn_ChooseDate.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -98,24 +106,36 @@ class ShowDepartures : Fragment() {
                 var dateSelected = parent?.getItemAtPosition(position).toString()
                 val database = FirebaseDatabase.getInstance()
                 var ordersReference = database.getReference("Rozkazy wyjazdu")
-                ordersReference.child(dateSelected).addListenerForSingleValueEvent(object :
-                    ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        val departureDetails = snapshot.value
-                            .toString()
-                        departureDetails.split(';')
-                            .toMutableList()
-                        Log.e(TAG, ": ${departureDetails[0]}" )
-                        Log.e(TAG, ": ${departureDetails[1]}" )
-                        Log.e(TAG, ": ${departureDetails[2]}" )
-                        Log.e(TAG, ": ${departureDetails[3]}")
-                        TODO("dokoncza")
-                    }
+                val viewModel = ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
+                if (dateSelected.isDigitsOnly()){
+                    ordersReference.child(vehicleID).child(dateSelected).addListenerForSingleValueEvent(object :
+                            ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            val departureDetails = snapshot.value.toString().removeSurrounding("{", "}").split(",").toMutableList()
+                            Log.d(TAG, "${departureDetails.size}")
+                            tv_departurePurpose.text = departureDetails[0].removePrefix("Cel wyjazdu=")
+                            tv_DepartureType.text = departureDetails[4].removePrefix(" Rodzaj przewozu=")
+                            tv_Route.text = departureDetails[2].removePrefix(" Kurs=")
+                            tv_Driver.text = departureDetails[3].removePrefix(" Kierowca=")
+                            tv_Dispo.text = departureDetails[1].removePrefix(" Drugi dysponent=")
 
-                    override fun onCancelled(error: DatabaseError) {
-                        Log.e(TAG, "Data Cancel")
-                    }
-                })
+
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            Log.e(TAG, "Data Cancel")
+                        }
+                    })
+                }
+                else{
+                    Log.e(TAG, "onItemSelected: Dana w spinnerze to nie liczba", )
+                }
+                val thisDay = SimpleDateFormat("ddMMYYYYHHMMM").format(Date())
+                val dayValues = mutableListOf<String>(thisDay.slice(0..1),thisDay.slice(2..3),thisDay.slice(4..8))
+                val dateOfOrder = SimpleDateFormat("ddMMYYYYHHMM").parse(dateSelected)
+                if (dateOfOrder.before(SimpleDateFormat("ddMMYYYYHHMM").parse(viewModel.DayForUser))){
+                    Log.e(TAG, "onItemSelected: dziala", )
+                }
 
             }
 
@@ -123,16 +143,14 @@ class ShowDepartures : Fragment() {
                 TODO("Not yet implemented")
             }
         }
+
     }
 
     private fun getOrderDate(orderReference: DatabaseReference,vehicleID : String, orderTable : MutableList<String> ) {
         orderReference.child(vehicleID).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                var lista = snapshot.key.toString()
-                lista.split(";")
-                    .toMutableList<String>()
-                lista.forEach {
-                    orderTable.add(it.toString())
+                var lista = snapshot.children.forEach{
+                    orderTable.add(it.key.toString())
                 }
                 val dateSpinner = view!!.findViewById<Spinner>(R.id.spn_ChooseDate)
                 val dateAdapter = ArrayAdapter<String>(
@@ -142,7 +160,7 @@ class ShowDepartures : Fragment() {
                 )
                 dateSpinner?.adapter = dateAdapter
                 view!!.findViewById<Spinner>(R.id.spn_ChooseDate).visibility = View.VISIBLE
-                chooseDate()
+                chooseDate(vehicleID)
 
             }
 

@@ -32,7 +32,7 @@
         android:ems="10"
         android:hint="Wprowadź hasło"
         android:inputType="textPassword"
-        android:text="TEST"
+        android:text="PelnaKontrola"
         android:textAlignment="center"
         app:layout_constraintTop_toBottomOf="@+id/edt_DriverLogin"
         tools:layout_editor_absoluteX="100dp" />
@@ -46,7 +46,7 @@
         android:ems="10"
         android:hint="Wprowadź ID"
         android:inputType="number"
-        android:text="4412112244"
+        android:text="6568777378"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
