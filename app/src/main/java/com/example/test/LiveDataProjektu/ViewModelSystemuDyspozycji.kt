@@ -88,7 +88,7 @@ class ViewModelSystemuDyspozycji (private val savedStateHandle : SavedStateHandl
 
     var NazwaTrasy = mutableListOf<TrasaWPunktach>()
 
-
+    var coordinatesTable = mutableListOf<String>()
     var RozliczeniePojazdu = mutableListOf<DaneRecycler>()
 
     var adminDriversList = mutableListOf<DriverDataClass>()
@@ -101,6 +101,8 @@ class ViewModelSystemuDyspozycji (private val savedStateHandle : SavedStateHandl
     var vehicleStatus = mutableListOf<String>()
     var vehicleOdometer = mutableListOf<Double>()
     var vehicleType = mutableListOf<String>()
+    var lngTable = mutableListOf<Double>()
+    var latTable = mutableListOf<Double>()
 
 
     fun zapiszWspolrzednePunktuTrasy(dana : Double?, zmienna : Double?) {

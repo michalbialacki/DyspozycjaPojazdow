@@ -164,5 +164,14 @@
         android:id="@+id/showDepartures"
         android:name="com.example.test.Fragmenty.Admin.ShowDepartures"
         android:label="fragment_show_departures"
-        tools:layout="@layout/fragment_show_departures" />
+        tools:layout="@layout/fragment_show_departures" >
+        <action
+            android:id="@+id/action_showDepartures_to_checkpointTable"
+            app:destination="@id/checkpointTable" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkpointTable"
+        android:name="com.example.test.Fragmenty.Admin.CheckpointTable"
+        android:label="fragment_checkpoint_table"
+        tools:layout="@layout/fragment_checkpoint_table" />
 </navigation>

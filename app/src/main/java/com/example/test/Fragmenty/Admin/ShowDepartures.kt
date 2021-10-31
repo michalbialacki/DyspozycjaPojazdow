@@ -13,6 +13,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import com.example.test.LiveDataProjektu.ViewModelSystemuDyspozycji
 import com.example.test.R
 import com.google.firebase.database.*
@@ -28,6 +29,7 @@ import kotlin.reflect.typeOf
 
 
 class ShowDepartures : Fragment() {
+    var testSet = 31
 
 
 
@@ -74,10 +76,22 @@ class ShowDepartures : Fragment() {
                 id: Long
             ) {
                 val database = FirebaseDatabase.getInstance()
+                val viewModel = ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
                 var ordersReference = database.getReference("Rozkazy wyjazdu")
                 var vehicleID = parent?.getItemAtPosition(position).toString()
+                lt_OrderDetails.visibility = View.INVISIBLE
+                viewModel.adminVehicleList.forEachIndexed({ index, element ->
+                    if (element.vehicleID.equals(vehicleID)) {
+                        testSet = index
+                    }
+                })
+                
                 var orderTable = mutableListOf<String>()
+
                 orderTable.clear()
+                btn_ShowRoute.setOnClickListener {
+                    Navigation.findNavController(requireView()).navigate(R.id.vehicleSelected)
+                }
 
                 //FIREBASE GET dates
                 getOrderDate(ordersReference,vehicleID,orderTable)
@@ -107,25 +121,49 @@ class ShowDepartures : Fragment() {
                 val database = FirebaseDatabase.getInstance()
                 var ordersReference = database.getReference("Rozkazy wyjazdu")
                 val viewModel = ViewModelProvider(requireActivity()).get(ViewModelSystemuDyspozycji::class.java)
+                viewModel.latTable.clear()
+                viewModel.lngTable.clear()
                 if (dateSelected.isDigitsOnly()){
-                    ordersReference.child(vehicleID).child(dateSelected).addListenerForSingleValueEvent(object :
+                    lt_OrderDetails.visibility = View.VISIBLE
+                    ordersReference.child(vehicleID).child(dateSelected).addListenerForSingleValueEvent(
+                        object :
                             ValueEventListener {
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            val departureDetails = snapshot.value.toString().removeSurrounding("{", "}").split(",").toMutableList()
-                            Log.d(TAG, "${departureDetails.size}")
-                            tv_departurePurpose.text = departureDetails[0].removePrefix("Cel wyjazdu=")
-                            tv_DepartureType.text = departureDetails[4].removePrefix(" Rodzaj przewozu=")
-                            tv_Route.text = departureDetails[2].removePrefix(" Kurs=")
-                            tv_Driver.text = departureDetails[3].removePrefix(" Kierowca=")
-                            tv_Dispo.text = departureDetails[1].removePrefix(" Drugi dysponent=")
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                val departureDetails =
+                                    snapshot.value.toString().removeSurrounding("{", "}").split(",")
+                                        .toMutableList()
+                                tv_departurePurpose.text =
+                                    departureDetails[0].removePrefix("Cel wyjazdu=")
+                                tv_DepartureType.text =
+                                    departureDetails[4].removePrefix(" Rodzaj przewozu=")
+                                tv_Route.text = departureDetails[2].removePrefix(" Kurs=")
+                                tv_Driver.text = departureDetails[3].removePrefix(" Kierowca=")
+                                tv_Dispo.text =
+                                    departureDetails[1].removePrefix(" Drugi dysponent=")
+                                if (departureDetails.size > 5) {
+                                    var checkpointTable = mutableListOf<String>()
+                                    snapshot.child("Rozliczenie Pojazdu").children.forEach {
+                                        checkpointTable.add(it.child("driverCoordinates").value.toString())
+                                    }
+
+                                    checkpointTable.forEach {
+                                        var lista = it.split(" , ")
+                                            .toMutableList()
+                                        viewModel.latTable.add(lista[0].toDouble())
+                                        viewModel.lngTable.add(lista[1].toDouble())
+                                    }
+
+                                } else {
+                                    Log.e(TAG, "Brak rozliczenia pojazdu",)
+                                }
 
 
-                        }
+                            }
 
-                        override fun onCancelled(error: DatabaseError) {
-                            Log.e(TAG, "Data Cancel")
-                        }
-                    })
+                            override fun onCancelled(error: DatabaseError) {
+                                Log.e(TAG, "Data Cancel")
+                            }
+                        })
                 }
                 else{
                     Log.e(TAG, "onItemSelected: Dana w spinnerze to nie liczba", )
@@ -134,8 +172,16 @@ class ShowDepartures : Fragment() {
                 val dayValues = mutableListOf<String>(thisDay.slice(0..1),thisDay.slice(2..3),thisDay.slice(4..8))
                 val dateOfOrder = SimpleDateFormat("ddMMYYYYHHMM").parse(dateSelected)
                 if (dateOfOrder.before(SimpleDateFormat("ddMMYYYYHHMM").parse(viewModel.DayForUser))){
-                    Log.e(TAG, "onItemSelected: dziala", )
+                    btn_ShowRoute.text = "Rozliczenie pojazdu"
+                    btn_ShowRoute.setOnClickListener {
+                        Navigation.findNavController(requireView()).navigate(R.id.checkpointTable)
+                        viewModel.vehicleAdapterPosition.value = testSet
+                    }
                 }
+                else{
+
+                }
+
 
             }
 
